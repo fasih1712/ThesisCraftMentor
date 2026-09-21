@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thesis Craft Mentors | Academic Writing & Assignment Support</title>
+<meta name="description" content="Thesis Craft Mentors helps thesis students with assignment writing, research support, editing and formatting, one chapter at a time.">
+<link rel="icon" href="assets/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  /* apply saved theme before first paint, otherwise the page follows system preference */
+  (function(){
+    try{
+      var saved = localStorage.getItem('theme');
+      if (saved === 'light' || saved === 'dark') document.documentElement.setAttribute('data-theme', saved);
+    }catch(e){}
+  })();
+</script>
+<style>
+  :root{
+    --navy-900:#0c2038;
+    --navy-800:#123253;
+    --navy-700:#1a4267;
+    --gold-500:#d4af37;
+    --gold-400:#e3c463;
+    --gold-700:#9c7a1f;
+    --gold-100:#f6ecc9;
+    --paper:#f6f2e7;
+    --paper-line:#e6ddc4;
+    --ink:#1c1a15;
+    --ink-soft:#4a463c;
+    --white:#ffffff;
+    --bg:#f6f2e7;
+    --surface:#ffffff;
+    --heading:#0c2038;
+    --radius-s:4px;
+    --radius-m:10px;
+    --radius-l:16px;
+    --maxw:1120px;
+    --ease:cubic-bezier(.2,.7,.3,1);
+  }
+  /* dark mode: follows system by default, [data-theme] lets the user override */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper-line:rgba(212,175,55,0.16);
+      --ink:#f2ede2;
+      --ink-soft:rgba(242,237,226,0.7);
+      --gold-700:#e3c463;
+      --bg:#0d1420;
+      --surface:#16202f;
+      --heading:#f6f2e7;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper-line:rgba(212,175,55,0.16);
+    --ink:#f2ede2;
+    --ink-soft:rgba(242,237,226,0.7);
+    --gold-700:#e3c463;
+    --bg:#0d1420;
+    --surface:#16202f;
+    --heading:#f6f2e7;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+  body{
+    margin:0;
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    transition:background-color .35s ease, color .35s ease;
+  }
+  h1,h2,h3,.serif{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  section{padding:104px 0; scroll-margin-top:84px;}
+  @media (max-width:720px){ section{padding:68px 0;} }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--gold-500);
+    outline-offset:3px;
+  }
+
+  .kicker{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.72rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold-700); margin-bottom:14px;
+  }
+  .kicker::before{content:""; width:22px; height:1px; background:var(--gold-700);}
+  .on-dark .kicker{color:var(--gold-400);}
+  .on-dark .kicker::before{background:var(--gold-400);}
+
+  /* reveal on scroll, safe without JS */
+  .js-ready .reveal{opacity:0; transform:translateY(18px); transition:opacity .6s var(--ease), transform .6s var(--ease);}
+  .js-ready .reveal.in-view{opacity:1; transform:none;}
+
+  /* cascade delay for grouped cards */
+  .chapter-list .reveal:nth-child(1){transition-delay:0s;}
+  .chapter-list .reveal:nth-child(2){transition-delay:.07s;}
+  .chapter-list .reveal:nth-child(3){transition-delay:.14s;}
+  .chapter-list .reveal:nth-child(4){transition-delay:.21s;}
+  .chapter-list .reveal:nth-child(5){transition-delay:.28s;}
+  .steps .reveal:nth-child(1){transition-delay:0s;}
+  .steps .reveal:nth-child(2){transition-delay:.08s;}
+  .steps .reveal:nth-child(3){transition-delay:.16s;}
+  .steps .reveal:nth-child(4){transition-delay:.24s;}
+  .why-grid .reveal:nth-child(1){transition-delay:0s;}
+  .why-grid .reveal:nth-child(2){transition-delay:.1s;}
+  .why-grid .reveal:nth-child(3){transition-delay:.2s;}
+
+  /* scroll progress bar */
+  .scroll-progress{
+    position:fixed; top:0; left:0; height:3px; width:0%; z-index:70;
+    background:linear-gradient(90deg, var(--gold-700), var(--gold-500), var(--gold-400));
+  }
+
+  /* custom cursor, desktop with a mouse only */
+  body.has-cursor, body.has-cursor a, body.has-cursor button, body.has-cursor input, body.has-cursor textarea{cursor:none;}
+  .cursor-dot, .cursor-ring{
+    position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
+    border-radius:50%; transform:translate(-50%,-50%); opacity:0;
+    transition:opacity .25s ease;
+    will-change:transform;
+  }
+  .cursor-dot{width:6px; height:6px; background:var(--gold-500);}
+  .cursor-ring{
+    width:34px; height:34px; border:1px solid rgba(212,175,55,0.55);
+    transition:opacity .25s ease, width .2s var(--ease), height .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
+  }
+  .cursor-dot.is-visible, .cursor-ring.is-visible{opacity:1;}
+  .cursor-ring.is-hovering{width:52px; height:52px; border-color:var(--gold-400); background:rgba(212,175,55,0.08);}
+
+  /* nav */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,32,56,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(212,175,55,0.25);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; color:var(--paper);}
+  .brand img{height:38px; width:38px; border-radius:50%; box-shadow:0 0 0 1px rgba(212,175,55,0.4);}
+  .brand-name{font-family:'Fraunces',serif; font-size:1.05rem; color:var(--white); line-height:1.15;}
+  .brand-name small{display:block; font-family:'Inter',sans-serif; font-size:0.62rem; letter-spacing:0.09em; color:var(--gold-400); font-weight:500;}
+  nav.links{display:flex; gap:30px; align-items:center;}
+  nav.links a{position:relative; color:var(--paper); font-size:0.92rem; opacity:0.85; transition:opacity .2s;}
+  nav.links a::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--gold-400); transform:scaleX(0); transform-origin:left; transition:transform .25s var(--ease);}
+  nav.links a:hover{opacity:1;}
+  nav.links a:hover::after{transform:scaleX(1);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:var(--radius-s);
+    font-size:0.92rem; font-weight:600; cursor:pointer; border:1px solid transparent;
+    transition:transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 14px 24px -12px rgba(0,0,0,0.35);}
+  .btn-gold{background:var(--gold-500); color:var(--navy-900);}
+  .btn-gold:hover{background:var(--gold-400);}
+  .btn-ghost{background:transparent; border-color:rgba(246,242,231,0.4); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--gold-400); color:var(--gold-400);}
+  .nav-cta{display:none;}
+  @media (min-width:860px){ .nav-cta{display:inline-flex;} }
+
+  .menu-toggle{display:none; background:none; border:none; color:var(--paper); padding:6px; cursor:pointer;}
+  .menu-toggle svg{width:24px; height:24px; display:block;}
+
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(212,175,55,0.35); background:rgba(246,242,231,0.06);
+    color:var(--gold-400); cursor:pointer;
+    transition:background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+  }
+  .theme-toggle:hover{background:rgba(212,175,55,0.18); border-color:var(--gold-400); transform:translateY(-2px);}
+  .theme-toggle svg{width:18px; height:18px; display:none;}
+  .theme-toggle .icon-sun{display:block;}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:block;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:none;}
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:block;}
+  }
+  @media (max-width:859px){
+    nav.links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--navy-900); border-bottom:1px solid rgba(212,175,55,0.25);
+      max-height:0; overflow:hidden;
+      transition:max-height .3s var(--ease);
+    }
+    nav.links a{padding:16px 28px; border-top:1px solid rgba(212,175,55,0.14);}
+    nav.links a::after{display:none;}
+    header.site-nav.nav-open nav.links{max-height:320px;}
+    .menu-toggle{display:block;}
+  }
+
+  /* hero */
+  .hero{
+    background:radial-gradient(120% 140% at 78% 10%, var(--navy-700) 0%, var(--navy-800) 45%, var(--navy-900) 100%);
+    color:var(--paper);
+    padding:96px 0 108px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:""; position:absolute; inset:-40px 0 0 0;
+    background-image:radial-gradient(rgba(212,175,55,0.16) 1px, transparent 1px);
+    background-size:26px 26px;
+    mask-image:radial-gradient(circle at 75% 20%, black, transparent 70%);
+    pointer-events:none;
+    transform:translateY(calc(var(--parallax, 0) * 1px));
+  }
+  .hero .wrap{display:grid; grid-template-columns:1.15fr 0.85fr; gap:56px; align-items:center; position:relative;}
+  @media (max-width:860px){ .hero .wrap{grid-template-columns:1fr;} .hero{padding:68px 0 76px;} }
+  @keyframes fadeUp{from{opacity:0; transform:translateY(18px);} to{opacity:1; transform:none;}}
+  .hero h1{font-size:clamp(2.15rem, 4vw, 3.25rem); line-height:1.14; color:var(--white); animation:fadeUp .7s var(--ease) both;}
+  .hero .lede{margin-top:22px; font-size:1.08rem; color:rgba(246,242,231,0.82); max-width:46ch; animation:fadeUp .7s var(--ease) .12s both;}
+  .hero .cta-row{margin-top:36px; display:flex; gap:14px; flex-wrap:wrap; animation:fadeUp .7s var(--ease) .22s both;}
+  .hero-badges{margin-top:46px; display:flex; gap:26px; flex-wrap:wrap; animation:fadeUp .7s var(--ease) .32s both;}
+  .hero-badge{font-size:0.85rem; color:rgba(246,242,231,0.8); display:flex; gap:10px; align-items:center;}
+  .hero-badge .icon-circle{width:30px; height:30px; border-radius:50%; background:rgba(212,175,55,0.14); display:flex; align-items:center; justify-content:center; flex:none;}
+  .hero-badge svg{flex:none; width:15px; height:15px; stroke:var(--gold-400);}
+
+  .hero-mark{display:flex; justify-content:center; align-items:center; position:relative; animation:fadeUp .8s var(--ease) .18s both;}
+  .hero-mark .ring{position:relative; width:min(320px, 78%);}
+  .hero-mark img{
+    width:100%; border-radius:50%;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,175,55,0.25);
+  }
+  .hero-mark .orbit-line{
+    position:absolute; inset:-26px; border:1px dashed rgba(212,175,55,0.32); border-radius:50%;
+    animation:spin 44s linear infinite;
+  }
+  .hero-mark .orbit-line.slow{inset:-46px; border-color:rgba(212,175,55,0.16); animation-duration:64s; animation-direction:reverse;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* section heads */
+  .section-head{max-width:640px; margin-bottom:56px;}
+  .section-head h2{font-size:clamp(1.75rem, 3vw, 2.35rem); color:var(--heading); transition:color .3s ease;}
+  .section-head p{margin-top:14px; color:var(--ink-soft); font-size:1.02rem;}
+  .on-dark .section-head h2{color:var(--white);}
+  .on-dark .section-head p{color:rgba(246,242,231,0.78);}
+
+  /* services */
+  .services{background:var(--bg); transition:background-color .35s ease;}
+  .chapter-list{border-top:1px solid var(--paper-line); transition:border-color .35s ease;}
+  .chapter{
+    display:grid; grid-template-columns:96px 1fr; gap:32px;
+    padding:32px 20px; margin:0 -20px; border-bottom:1px solid var(--paper-line);
+    align-items:start; border-radius:var(--radius-m);
+    transition:background .25s var(--ease), border-color .35s ease;
+  }
+  .chapter:hover{background:rgba(212,175,55,0.07);}
+  @media (max-width:640px){ .chapter{grid-template-columns:1fr; gap:8px;} }
+  .chapter .num{font-family:'Fraunces',serif; font-style:italic; font-size:1.5rem; color:var(--gold-500);}
+  .chapter h3{font-size:1.25rem; color:var(--heading); margin-bottom:8px; transition:color .3s ease;}
+  .chapter p{color:var(--ink-soft); max-width:60ch; margin:0;}
+
+  /* process */
+  .process{background:var(--navy-900); color:var(--paper);}
+  .steps{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:rgba(212,175,55,0.22);
+    border:1px solid rgba(212,175,55,0.22);
+    border-radius:var(--radius-m);
+    overflow:hidden;
+  }
+  @media (max-width:860px){ .steps{grid-template-columns:1fr;} }
+  .step{background:var(--navy-900); padding:34px 30px; transition:background .25s var(--ease);}
+  .step:hover{background:var(--navy-800);}
+  .step .num{font-family:'Fraunces',serif; font-style:italic; color:var(--gold-400); font-size:1.3rem;}
+  .step h3{font-size:1.05rem; margin-top:16px; color:var(--white);}
+  .step p{margin-top:10px; font-size:0.92rem; color:rgba(246,242,231,0.72);}
+
+  /* why us */
+  .why{background:var(--bg); transition:background-color .35s ease;}
+  .why-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media (max-width:780px){ .why-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:520px){ .why-grid{grid-template-columns:1fr;} }
+  .why-item{
+    padding:26px 24px 24px; border-top:2px solid var(--gold-500);
+    background:var(--surface); border-radius:var(--radius-m);
+    box-shadow:0 1px 2px rgba(28,26,21,0.05);
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .35s ease;
+  }
+  .why-item:hover{transform:translateY(-5px); box-shadow:0 20px 34px -22px rgba(28,26,21,0.28);}
+  .why-item h3{font-size:1.05rem; color:var(--heading); transition:color .3s ease;}
+  .why-item p{margin-top:8px; color:var(--ink-soft); font-size:0.95rem;}
+
+  /* testimonials */
+  .reviews{background:var(--navy-800); color:var(--paper);}
+  .review-slider{display:flex; align-items:center; gap:18px;}
+  .review-viewport{flex:1; overflow:hidden; border-radius:var(--radius-m);}
+  .review-track{display:flex; transition:transform .55s var(--ease);}
+  .review-track .review-card{flex:0 0 100%; max-width:100%;}
+  .slider-arrow{
+    flex:none; width:46px; height:46px; border-radius:50%;
+    border:1px solid rgba(212,175,55,0.4); background:rgba(246,242,231,0.06);
+    color:var(--gold-400); display:flex; align-items:center; justify-content:center;
+    cursor:pointer; transition:background .2s var(--ease), transform .2s var(--ease), border-color .2s var(--ease);
+  }
+  .slider-arrow:hover{background:rgba(212,175,55,0.18); border-color:var(--gold-400); transform:translateY(-2px);}
+  .slider-arrow svg{width:18px; height:18px;}
+  @media (max-width:640px){ .slider-arrow{width:38px; height:38px;} .review-slider{gap:10px;} }
+  .review-card{
+    position:relative;
+    background:rgba(246,242,231,0.05);
+    border:1px solid rgba(212,175,55,0.25);
+    border-radius:var(--radius-m);
+    padding:36px 32px;
+    max-width:640px; margin:0 auto;
+    text-align:center;
+  }
+  .review-card .mark{font-family:'Fraunces',serif; font-size:2.6rem; color:var(--gold-500); opacity:0.55; line-height:1; display:block; margin:0 auto 8px;}
+  .review-card .quote{font-family:'Fraunces',serif; font-style:italic; font-size:1.15rem; line-height:1.55; color:var(--white);}
+  .review-card .who{margin-top:20px; font-size:0.85rem; color:var(--gold-400);}
+  .review-dots{display:flex; justify-content:center; gap:10px; margin-top:28px;}
+  .review-dot{width:8px; height:8px; padding:0; border-radius:50%; border:none; background:rgba(246,242,231,0.3); cursor:pointer; transition:background .2s var(--ease), transform .2s var(--ease);}
+  .review-dot:hover{background:rgba(246,242,231,0.5);}
+  .review-dot.active{background:var(--gold-400); transform:scale(1.3);}
+  .demo-tag{display:block; text-align:center; font-size:0.72rem; color:rgba(246,242,231,0.45); margin-top:30px;}
+
+  /* contact */
+  .contact{background:var(--bg); transition:background-color .35s ease;}
+  .contact-grid{display:grid; grid-template-columns:1fr 0.85fr; gap:56px;}
+  @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
+  form.contact-form{display:flex; flex-direction:column; gap:18px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:0.85rem; color:var(--ink-soft); font-weight:500;}
+  .field input, .field textarea{
+    font-family:'Inter',sans-serif; font-size:0.96rem;
+    padding:13px 14px; border:1px solid var(--paper-line); border-radius:var(--radius-s);
+    background:var(--surface); color:var(--ink);
+    transition:border-color .2s ease, box-shadow .2s ease, background-color .35s ease, color .35s ease;
+  }
+  .field input:focus, .field textarea:focus{border-color:var(--gold-500); box-shadow:0 0 0 3px rgba(212,175,55,0.18);}
+  .field textarea{resize:vertical; min-height:112px;}
+  .form-note{font-size:0.8rem; color:var(--ink-soft); opacity:0.75;}
+  .contact-side{
+    background:var(--navy-900); color:var(--paper);
+    border-radius:var(--radius-l); padding:38px;
+  }
+  .contact-side h3{color:var(--white); font-size:1.2rem;}
+  .contact-line{display:flex; align-items:center; gap:14px; margin-top:22px; font-size:0.95rem;}
+  .contact-line .icon-circle{width:36px; height:36px; border-radius:50%; background:rgba(212,175,55,0.14); display:flex; align-items:center; justify-content:center; flex:none;}
+  .contact-line svg{flex:none; width:17px; height:17px; stroke:var(--gold-400);}
+  .contact-side .btn{margin-top:28px; width:100%; justify-content:center;}
+
+  /* footer */
+  footer{background:var(--navy-900); color:rgba(246,242,231,0.6); padding:38px 0;}
+  .footer-inner{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; font-size:0.85rem;}
+  .footer-inner .brand img{height:28px; width:28px;}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links a{transition:color .2s ease;}
+  .footer-links a:hover{color:var(--gold-400);}
+
+  /* whatsapp float */
+  .wa-float{
+    position:fixed; bottom:24px; right:24px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:#1d8b4a;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
+    transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .wa-float::before{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    background:#1d8b4a; opacity:0.55; z-index:-1; pointer-events:none;
+    animation:wa-pulse 2.4s ease-out infinite;
+  }
+  @keyframes wa-pulse{
+    0%{transform:scale(1); opacity:0.55;}
+    100%{transform:scale(1.9); opacity:0;}
+  }
+  .wa-float:hover{transform:translateY(-3px) scale(1.04); box-shadow:0 16px 32px -10px rgba(0,0,0,0.55);}
+  .wa-float svg{width:28px; height:28px; fill:var(--white);}
+
+  /* small phones */
+  @media (max-width:400px){
+    .wrap{padding:0 18px;}
+    .nav-inner{padding:12px 18px; gap:12px;}
+    .brand-name{font-size:0.92rem;}
+    .brand img{height:32px; width:32px;}
+    .contact-side{padding:26px 22px;}
+    .why-item{padding:22px 20px 20px;}
+    .review-card{padding:24px 20px 22px;}
+    .wa-float{width:50px; height:50px; bottom:16px; right:16px;}
+    .wa-float svg{width:24px; height:24px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="Thesis Craft Mentors logo">
+      <span class="brand-name">Thesis Craft Mentors<small>ACADEMIC WRITING PARTNER</small></span>
+    </a>
+    <nav class="links" id="primaryNav">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="btn btn-gold nav-cta" href="#contact">Get a free quote</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- hero -->
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>Your thesis deserves a steady hand on every chapter.</h1>
+        <p class="lede">We write, edit and polish the assignments that sit inside your thesis journey: literature reviews, chapter drafts, formatting and more, so you can stay focused on your research.</p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a>
+          <a class="btn btn-ghost" href="#process">See how we work</a>
+        </div>
+        <div class="hero-badges">
+          <span class="hero-badge"><span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2l2.8 6.6L21 9l-5 4.6L17.4 21 12 17.3 6.6 21 8 13.6 3 9l6.2-.4z"/></svg></span>Subject matter mentors</span>
+          <span class="hero-badge"><span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>Confidential and on time</span>
+          <span class="hero-badge"><span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/></svg></span>Free revisions</span>
+        </div>
+      </div>
+      <div class="hero-mark">
+        <div class="ring">
+          <div class="orbit-line slow"></div>
+          <div class="orbit-line"></div>
+          <img src="assets/logo.png" alt="Thesis Craft Mentors mark">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- services -->
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Services</span>
+        <h2>What we take off your plate</h2>
+        <p>Every thesis is built chapter by chapter. We step in wherever the workload is heaviest.</p>
+      </div>
+      <div class="chapter-list">
+        <div class="chapter reveal">
+          <span class="num">01</span>
+          <div>
+            <h3>Assignment writing</h3>
+            <p>Course assignments and coursework that sit alongside your thesis, written to your rubric and reading list.</p>
+          </div>
+        </div>
+        <div class="chapter reveal">
+          <span class="num">02</span>
+          <div>
+            <h3>Research and literature support</h3>
+            <p>Source gathering, literature review structuring and summaries so your argument stands on solid ground.</p>
+          </div>
+        </div>
+        <div class="chapter reveal">
+          <span class="num">03</span>
+          <div>
+            <h3>Editing and proofreading</h3>
+            <p>Careful, line by line review for clarity, grammar and academic tone: your voice, sharpened.</p>
+          </div>
+        </div>
+        <div class="chapter reveal">
+          <span class="num">04</span>
+          <div>
+            <h3>Formatting and referencing</h3>
+            <p>APA, MLA and Chicago styles applied consistently across chapters, tables and citations.</p>
+          </div>
+        </div>
+        <div class="chapter reveal">
+          <span class="num">05</span>
+          <div>
+            <h3>Plagiarism review</h3>
+            <p>A similarity check before submission, with fixes where the report flags a concern.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- process -->
+  <section class="process" id="process">
+    <div class="wrap on-dark">
+      <div class="section-head reveal">
+        <span class="kicker">Process</span>
+        <h2>How a project runs</h2>
+        <p>Four steps, start to finish, so you always know what's happening at every stage.</p>
+      </div>
+    </div>
+    <div class="wrap" style="padding-top:0;">
+      <div class="steps">
+        <div class="step reveal">
+          <span class="num">01</span>
+          <h3>Share your brief</h3>
+          <p>Send your assignment sheet or thesis chapter details over WhatsApp or the form below.</p>
+        </div>
+        <div class="step reveal">
+          <span class="num">02</span>
+          <h3>Get a free quote</h3>
+          <p>We confirm scope, deadline and price before any work begins, so there are no surprises later.</p>
+        </div>
+        <div class="step reveal">
+          <span class="num">03</span>
+          <h3>We draft, you review</h3>
+          <p>You get a draft to read through and flag anything you would like changed.</p>
+        </div>
+        <div class="step reveal">
+          <span class="num">04</span>
+          <h3>Final polish and delivery</h3>
+          <p>Formatting and referencing checked, then delivered ahead of your deadline.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- why us -->
+  <section class="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Why us</span>
+        <h2>Why students come back to us</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <h3>Mentors, not just writers</h3>
+          <p>Every project is handled by someone who has studied the subject, not a generalist.</p>
+        </div>
+        <div class="why-item reveal">
+          <h3>Deadline focused</h3>
+          <p>We work backward from your submission date, with buffer built in for revisions.</p>
+        </div>
+        <div class="why-item reveal">
+          <h3>Direct communication</h3>
+          <p>One WhatsApp thread from brief to delivery, with no ticket numbers and no waiting on email.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- reviews -->
+  <section class="reviews" id="reviews">
+    <div class="wrap on-dark">
+      <div class="section-head reveal">
+        <span class="kicker">Testimonials</span>
+        <h2>What students say</h2>
+      </div>
+      <div class="review-slider reveal" id="reviewSlider">
+        <button class="slider-arrow" id="reviewPrev" type="button" aria-label="Previous testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="review-viewport">
+          <div class="review-track" id="reviewTrack">
+            <div class="review-card">
+              <span class="mark">&ldquo;</span>
+              <p class="quote">Helped me structure my literature review when I was completely stuck.</p>
+              <p class="who">Placeholder review: MS student</p>
+            </div>
+            <div class="review-card">
+              <span class="mark">&ldquo;</span>
+              <p class="quote">Fast turnaround and the formatting was exactly to my university's style.</p>
+              <p class="who">Placeholder review: Final year student</p>
+            </div>
+            <div class="review-card">
+              <span class="mark">&ldquo;</span>
+              <p class="quote">Kept in touch throughout and delivered a day before my deadline.</p>
+              <p class="who">Placeholder review: Thesis client</p>
+            </div>
+          </div>
+        </div>
+        <button class="slider-arrow" id="reviewNext" type="button" aria-label="Next testimonial">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+      <div class="review-dots" id="reviewDots"></div>
+      <p class="demo-tag">Demo content: replace with real reviews before launch.</p>
+    </div>
+  </section>
+
+  <!-- contact -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Contact</span>
+        <h2>Tell us about your assignment</h2>
+        <p>Share a few details and we will come back with a quote and timeline.</p>
+      </div>
+      <div class="contact-grid">
+        <form class="contact-form reveal" id="contactForm">
+          <div class="field">
+            <label for="name">Full name</label>
+            <input id="name" type="text" placeholder="Your name" required>
+          </div>
+          <div class="field">
+            <label for="whatsapp">WhatsApp number</label>
+            <input id="whatsapp" type="tel" placeholder="+92 3XX XXXXXXX" required>
+          </div>
+          <div class="field">
+            <label for="topic">Course or thesis topic</label>
+            <input id="topic" type="text" placeholder="e.g. MBA marketing assignment">
+          </div>
+          <div class="field">
+            <label for="message">Assignment details and deadline</label>
+            <textarea id="message" placeholder="Tell us what you need and when it's due"></textarea>
+          </div>
+          <button class="btn btn-gold" type="submit" style="align-self:flex-start;">Send request</button>
+          <p class="form-note">Your email app will open with the request ready to send.</p>
+        </form>
+
+        <div class="contact-side reveal">
+          <h3>Prefer to just message us?</h3>
+          <div class="contact-line">
+            <span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg></span>
+            <a href="https://wa.me/447440736543" target="_blank" rel="noopener">+44 7440 736543</a>
+          </div>
+          <div class="contact-line">
+            <span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg></span>
+            info@thesiscraftmentors.com
+          </div>
+          <div class="contact-line">
+            <span class="icon-circle"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span>
+            @thesiscraftmentors
+          </div>
+          <a class="btn btn-gold" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo.png" alt="Thesis Craft Mentors logo">
+      <span class="brand-name" style="color:rgba(246,242,231,0.7); font-size:0.9rem;">Thesis Craft Mentors</span>
+    </a>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/thesiscraftmentors/" target="_blank" rel="noopener">Instagram</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <span>&copy; 2026 thesiscraftmentors.com</span>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/447440736543" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.9c1.8 1 3.9 1.5 6.3 1.5 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.2 1.2-4.5-.3-.4C5.3 17.7 4.7 16.4 4.7 15c0-6.2 5.1-11.3 11.3-11.3S27.3 8.8 27.3 15 22.2 24.8 16 24.8zm6.2-8.4c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.7.1-.1.3-.4.5-.5.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.1.8.3 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6 0-.1-.3-.2-.6-.4z"/></svg>
+</a>
+
+<script>
+  document.body.classList.add('js-ready');
+  var reduceMotionGlobal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* scroll progress bar */
+  (function(){
+    var bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.appendChild(bar);
+    function update(){
+      var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+
+  /* subtle hero parallax */
+  (function(){
+    var hero = document.querySelector('.hero');
+    if (!hero || reduceMotionGlobal) return;
+    window.addEventListener('scroll', function(){
+      var offset = Math.min(window.scrollY, hero.offsetHeight);
+      hero.style.setProperty('--parallax', (offset * 0.15).toFixed(1));
+    }, { passive: true });
+  })();
+
+  /* custom cursor, desktop pointer devices only */
+  (function(){
+    var supportsCursor = !window.matchMedia || window.matchMedia('(pointer:fine)').matches;
+    if (!supportsCursor) return;
+
+    document.body.classList.add('has-cursor');
+    var dot = document.createElement('div');
+    dot.className = 'cursor-dot';
+    var ring = document.createElement('div');
+    ring.className = 'cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    var mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+    var dotX = mouseX, dotY = mouseY;
+    var ringX = mouseX, ringY = mouseY;
+
+    document.addEventListener('mousemove', function(e){
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      dot.classList.add('is-visible');
+      ring.classList.add('is-visible');
+    });
+    document.addEventListener('mouseleave', function(){
+      dot.classList.remove('is-visible');
+      ring.classList.remove('is-visible');
+    });
+
+    function loop(){
+      dotX += (mouseX - dotX) * 0.45;
+      dotY += (mouseY - dotY) * 0.45;
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      dot.style.transform = 'translate(' + dotX + 'px,' + dotY + 'px) translate(-50%,-50%)';
+      ring.style.transform = 'translate(' + ringX + 'px,' + ringY + 'px) translate(-50%,-50%)';
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    var hoverTargets = 'a, button, input, textarea, .review-dot, .menu-toggle';
+    document.addEventListener('mouseover', function(e){
+      if (e.target.closest && e.target.closest(hoverTargets)) ring.classList.add('is-hovering');
+    });
+    document.addEventListener('mouseout', function(e){
+      if (e.target.closest && e.target.closest(hoverTargets)) ring.classList.remove('is-hovering');
+    });
+  })();
+
+  /* theme toggle: defaults to system preference, overridden and remembered once the user picks */
+  (function(){
+    var themeToggle = document.getElementById('themeToggle');
+    var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+
+    function currentTheme(){
+      var attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'light' || attr === 'dark') return attr;
+      return (mql && mql.matches) ? 'dark' : 'light';
+    }
+    function reflect(theme){
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+    reflect(currentTheme());
+
+    themeToggle.addEventListener('click', function(){
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      reflect(next);
+      try{ localStorage.setItem('theme', next); }catch(e){}
+    });
+
+    if (mql && mql.addEventListener) {
+      mql.addEventListener('change', function(){
+        if (!document.documentElement.getAttribute('data-theme')) reflect(currentTheme());
+      });
+    }
+  })();
+
+  var toggle = document.getElementById('menuToggle');
+  var siteNav = document.querySelector('.site-nav');
+  toggle.addEventListener('click', function(){
+    var open = siteNav.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('#primaryNav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      siteNav.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  (function(){
+    var slider = document.getElementById('reviewSlider');
+    var track = document.getElementById('reviewTrack');
+    var slides = track.children;
+    var dotsWrap = document.getElementById('reviewDots');
+    var prevBtn = document.getElementById('reviewPrev');
+    var nextBtn = document.getElementById('reviewNext');
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var current = 0;
+    var timer;
+
+    for (var i = 0; i < slides.length; i++) {
+      (function(index){
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'review-dot' + (index === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to testimonial ' + (index + 1));
+        dot.addEventListener('click', function(){ goTo(index); restart(); });
+        dotsWrap.appendChild(dot);
+      })(i);
+    }
+
+    function update(){
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      var dots = dotsWrap.children;
+      for (var i = 0; i < dots.length; i++) {
+        dots[i].classList.toggle('active', i === current);
+      }
+    }
+    function goTo(index){
+      current = (index + slides.length) % slides.length;
+      update();
+    }
+    function next(){ goTo(current + 1); }
+    function prev(){ goTo(current - 1); }
+    function start(){
+      if (reduceMotion || slides.length < 2) return;
+      timer = setInterval(next, 5000);
+    }
+    function restart(){
+      clearInterval(timer);
+      start();
+    }
+
+    nextBtn.addEventListener('click', function(){ next(); restart(); });
+    prevBtn.addEventListener('click', function(){ prev(); restart(); });
+    slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
+    slider.addEventListener('mouseleave', start);
+
+    var touchStartX = null;
+    slider.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, { passive: true });
+    slider.addEventListener('touchend', function(e){
+      if (touchStartX === null) return;
+      var delta = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(delta) > 40) { delta < 0 ? next() : prev(); restart(); }
+      touchStartX = null;
+    });
+
+    update();
+    start();
+  })();
+
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el){ observer.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
+  }
+
+  document.getElementById('contactForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    var form = event.currentTarget;
+    var name = form.querySelector('#name').value;
+    var whatsapp = form.querySelector('#whatsapp').value;
+    var topic = form.querySelector('#topic').value;
+    var message = form.querySelector('#message').value;
+    var subject = encodeURIComponent('New assignment enquiry from ' + name);
+    var body = encodeURIComponent(
+      'Full name: ' + name +
+      '\nWhatsApp number: ' + whatsapp +
+      '\nCourse or thesis topic: ' + topic +
+      '\nAssignment details and deadline: ' + message
+    );
+    window.location.href = 'mailto:info@thesiscraftmentors.com?subject=' + subject + '&body=' + body;
+  });
+</script>
+
+</body>
+</html>

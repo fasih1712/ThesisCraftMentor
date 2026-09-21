@@ -1,0 +1,7 @@
+services:
+  web:
+    image: ghcr.io/fasih1712/thesiscraftmentors:latest
+    container_name: thesiscraftmentors
+    restart: unless-stopped
+    ports:
+      - "80:80"
