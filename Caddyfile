@@ -1,0 +1,7 @@
+thesiscraftmentors.com, www.thesiscraftmentors.com {
+    root * /srv
+    file_server
+    encode gzip
+
+    header /assets/* Cache-Control "public, max-age=2592000, immutable"
+}
