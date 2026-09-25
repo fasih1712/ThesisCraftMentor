@@ -5,3 +5,10 @@ thesiscraftmentors.com, www.thesiscraftmentors.com {
 
     header /assets/* Cache-Control "public, max-age=2592000, immutable"
 }
+
+# AFTR Solutions site: separate container (aftr-web) published on the
+# docker0 bridge IP. See github.com/fasih1712/aftrsolutions DEPLOY.md.
+aftrsolutions.com, www.aftrsolutions.com {
+    reverse_proxy 172.17.0.1:8081
+    encode gzip
+}
