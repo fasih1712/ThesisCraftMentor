@@ -384,10 +384,12 @@ fbq('track', 'PageView');
   .uni-name{font-family:'Fraunces',serif; font-size:1.02rem; color:var(--white); white-space:nowrap;}
   .uni-country{font-size:0.75rem; color:rgba(246,242,231,0.6);}
   @keyframes uni-scroll{to{transform:translateX(calc(-50% - 8px));}}
+  /* keep both carousels moving even when the OS asks for reduced motion */
   @media (prefers-reduced-motion: reduce){
-    .uni-marquee{-webkit-mask-image:none; mask-image:none;}
-    .uni-track{animation:none; width:auto; flex-wrap:wrap; justify-content:center;}
-    .uni[aria-hidden="true"]{display:none;}
+    .uni-track{animation-duration:45s !important;}
+    .review-track{transition-duration:.55s !important;}
+    .review-progress span.run{animation-duration:var(--review-delay,3s) !important;}
+    .review-card .mark, .review-card .quote, .review-card .who{transition-duration:.6s !important;}
   }
   /* review animation + autoplay progress */
   .review-viewport{position:relative;}
@@ -400,7 +402,6 @@ fbq('track', 'PageView');
   .review-card.is-active .mark{opacity:0.55; transform:none; transition-delay:.1s;}
   .review-card.is-active .quote{opacity:1; transform:none; transition-delay:.2s;}
   .review-card.is-active .who{opacity:1; transform:none; transition-delay:.32s;}
-  @media (prefers-reduced-motion: reduce){ .review-card .mark, .review-card .quote, .review-card .who{opacity:1; transform:none;} .review-progress{display:none;} }
   .review-dots{display:flex; justify-content:center; gap:10px; margin-top:28px;}
   .review-dot{width:8px; height:8px; padding:0; border-radius:50%; border:none; background:rgba(246,242,231,0.3); cursor:pointer; transition:background .2s var(--ease), transform .2s var(--ease);}
   .review-dot:hover{background:rgba(246,242,231,0.5);}
@@ -955,7 +956,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var dotsWrap = document.getElementById('reviewDots');
     var prevBtn = document.getElementById('reviewPrev');
     var nextBtn = document.getElementById('reviewNext');
-    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var progress = document.getElementById('reviewProgress');
     var DELAY = 3000;
     var current = 0;
@@ -998,7 +998,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function prev(){ goTo(current - 1); }
     function start(){
       stop();
-      if (reduceMotion || slides.length < 2 || document.hidden) return;
+      if (slides.length < 2 || document.hidden) return;
       slider.classList.remove('paused');
       timer = setInterval(next, DELAY);
       runProgress();
