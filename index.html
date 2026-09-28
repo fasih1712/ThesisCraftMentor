@@ -381,6 +381,25 @@ fbq('track', 'PageView');
   .demo-tag{display:block; text-align:center; font-size:0.72rem; color:rgba(246,242,231,0.45); margin-top:30px;}
 
   /* contact */
+  /* blog */
+  .blog{background:var(--bg); transition:background-color .35s ease;}
+  .blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  @media (max-width:860px){ .blog-grid{grid-template-columns:1fr;} }
+  .blog-grid .reveal:nth-child(2){transition-delay:.1s;}
+  .blog-grid .reveal:nth-child(3){transition-delay:.2s;}
+  .post-card{
+    display:flex; flex-direction:column; height:100%; text-decoration:none; color:var(--ink);
+    background:var(--surface); border:1px solid var(--paper-line); border-radius:var(--radius-l);
+    padding:28px 26px; transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s ease, background-color .35s ease;
+  }
+  .post-card:hover{transform:translateY(-5px); border-color:var(--gold-500); box-shadow:0 20px 34px -22px rgba(28,26,21,0.28);}
+  .post-card .tag{align-self:flex-start; font-size:0.72rem; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-700); background:rgba(212,175,55,0.12); padding:4px 10px; border-radius:999px;}
+  .post-card h3{font-size:1.15rem; color:var(--heading); margin:16px 0 8px; line-height:1.3; transition:color .3s ease;}
+  .post-card p{color:var(--ink-soft); font-size:0.95rem; margin:0 0 18px;}
+  .post-card .post-meta{margin-top:auto; font-size:0.83rem; color:var(--ink-soft);}
+  .post-card .read-more{margin-top:10px; font-weight:600; font-size:0.9rem; color:var(--gold-700);}
+  @media (prefers-reduced-motion: reduce){ .post-card:hover{transform:none;} }
+
   .contact{background:var(--bg); transition:background-color .35s ease;}
   .contact-grid{display:grid; grid-template-columns:1fr 0.85fr; gap:56px;}
   @media (max-width:860px){ .contact-grid{grid-template-columns:1fr;} }
@@ -465,7 +484,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#reviews">Reviews</a>
-      <a href="/blog/">Blog</a>
+      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </nav>
     <a class="btn btn-gold nav-cta" href="#contact">Get a free quote</a>
@@ -652,6 +671,40 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <!-- blog -->
+  <section class="blog" id="blog">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">Blog</span>
+        <h2>Free guides for thesis writers</h2>
+        <p>Practical, step-by-step advice from our mentors on topics, proposals, literature reviews and more.</p>
+      </div>
+      <div class="blog-grid">
+        <a class="post-card reveal" href="/blog/how-to-write-a-research-proposal/">
+          <span class="tag">Planning</span>
+          <h3>How to Write a Research Proposal That Gets Approved</h3>
+          <p>Aims, methodology, timeline and more: how to structure a proposal your supervisor will approve.</p>
+          <span class="post-meta"><time datetime="2026-09-29">29 Sep 2026</time> &middot; 8 min read</span>
+          <span class="read-more">Read the guide &rarr;</span>
+        </a>
+        <a class="post-card reveal" href="/blog/how-to-choose-a-dissertation-topic/">
+          <span class="tag">Getting started</span>
+          <h3>How to Choose a Dissertation Topic: 8 Practical Steps</h3>
+          <p>Turn a broad interest into a focused, researchable question you can finish on time.</p>
+          <span class="post-meta"><time datetime="2026-09-26">26 Sep 2026</time> &middot; 7 min read</span>
+          <span class="read-more">Read the guide &rarr;</span>
+        </a>
+        <a class="post-card reveal" href="/blog/how-to-write-a-literature-review/">
+          <span class="tag">Writing</span>
+          <h3>How to Write a Literature Review for Your Thesis</h3>
+          <p>Find sources, organise themes, synthesise research and spot the gap your study will fill.</p>
+          <span class="post-meta"><time datetime="2026-09-23">23 Sep 2026</time> &middot; 9 min read</span>
+          <span class="read-more">Read the guide &rarr;</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- contact -->
   <section class="contact" id="contact">
     <div class="wrap">
@@ -712,7 +765,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </a>
     <div class="footer-links">
       <a href="https://www.instagram.com/thesiscraftmentors/" target="_blank" rel="noopener">Instagram</a>
-      <a href="/blog/">Blog</a>
+      <a href="#blog">Blog</a>
       <a href="#contact">Contact</a>
     </div>
     <span>&copy; 2026 thesiscraftmentors.com</span>

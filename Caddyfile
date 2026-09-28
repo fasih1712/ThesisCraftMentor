@@ -1,5 +1,7 @@
 thesiscraftmentors.com, www.thesiscraftmentors.com {
     root * /srv
+    redir /blog /#blog
+    redir /blog/ /#blog
     file_server
     encode gzip
 
