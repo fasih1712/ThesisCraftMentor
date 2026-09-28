@@ -389,6 +389,18 @@ fbq('track', 'PageView');
     .uni-track{animation:none; width:auto; flex-wrap:wrap; justify-content:center;}
     .uni[aria-hidden="true"]{display:none;}
   }
+  /* review animation + autoplay progress */
+  .review-viewport{position:relative;}
+  .review-progress{position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(246,242,231,0.08); overflow:hidden;}
+  .review-progress span{display:block; height:100%; width:100%; background:var(--gold-400); transform:scaleX(0); transform-origin:left;}
+  .review-progress span.run{animation:review-fill var(--review-delay,3s) linear forwards;}
+  .review-slider.paused .review-progress span.run{animation-play-state:paused;}
+  @keyframes review-fill{to{transform:scaleX(1);}}
+  .review-card .mark, .review-card .quote, .review-card .who{opacity:0.25; transform:translateY(14px); transition:opacity .6s var(--ease), transform .6s var(--ease);}
+  .review-card.is-active .mark{opacity:0.55; transform:none; transition-delay:.1s;}
+  .review-card.is-active .quote{opacity:1; transform:none; transition-delay:.2s;}
+  .review-card.is-active .who{opacity:1; transform:none; transition-delay:.32s;}
+  @media (prefers-reduced-motion: reduce){ .review-card .mark, .review-card .quote, .review-card .who{opacity:1; transform:none;} .review-progress{display:none;} }
   .review-dots{display:flex; justify-content:center; gap:10px; margin-top:28px;}
   .review-dot{width:8px; height:8px; padding:0; border-radius:50%; border:none; background:rgba(246,242,231,0.3); cursor:pointer; transition:background .2s var(--ease), transform .2s var(--ease);}
   .review-dot:hover{background:rgba(246,242,231,0.5);}
@@ -677,6 +689,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <p class="who">Thesis client</p>
             </div>
           </div>
+          <div class="review-progress" aria-hidden="true"><span id="reviewProgress"></span></div>
         </div>
         <button class="slider-arrow" id="reviewNext" type="button" aria-label="Next testimonial">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
@@ -943,8 +956,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var prevBtn = document.getElementById('reviewPrev');
     var nextBtn = document.getElementById('reviewNext');
     var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var progress = document.getElementById('reviewProgress');
+    var DELAY = 3000;
     var current = 0;
     var timer;
+    progress.style.setProperty('--review-delay', DELAY + 'ms');
 
     for (var i = 0; i < slides.length; i++) {
       (function(index){
@@ -963,26 +979,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       for (var i = 0; i < dots.length; i++) {
         dots[i].classList.toggle('active', i === current);
       }
+      for (var j = 0; j < slides.length; j++) {
+        slides[j].classList.toggle('is-active', j === current);
+        slides[j].setAttribute('aria-hidden', j === current ? 'false' : 'true');
+      }
+    }
+    function runProgress(){
+      progress.classList.remove('run');
+      void progress.offsetWidth;
+      if (timer) progress.classList.add('run');
     }
     function goTo(index){
       current = (index + slides.length) % slides.length;
       update();
+      runProgress();
     }
     function next(){ goTo(current + 1); }
     function prev(){ goTo(current - 1); }
     function start(){
-      if (reduceMotion || slides.length < 2) return;
-      timer = setInterval(next, 5000);
+      stop();
+      if (reduceMotion || slides.length < 2 || document.hidden) return;
+      slider.classList.remove('paused');
+      timer = setInterval(next, DELAY);
+      runProgress();
     }
-    function restart(){
+    function stop(){
       clearInterval(timer);
-      start();
+      timer = null;
+      slider.classList.add('paused');
     }
+    function restart(){ start(); }
 
     nextBtn.addEventListener('click', function(){ next(); restart(); });
     prevBtn.addEventListener('click', function(){ prev(); restart(); });
-    slider.addEventListener('mouseenter', function(){ clearInterval(timer); });
-    slider.addEventListener('mouseleave', start);
+    slider.addEventListener('pointerenter', function(e){ if (e.pointerType === 'mouse') stop(); });
+    slider.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') start(); });
+    slider.addEventListener('focusin', stop);
+    slider.addEventListener('focusout', function(e){ if (!slider.contains(e.relatedTarget)) start(); });
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : start(); });
 
     var touchStartX = null;
     slider.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, { passive: true });
