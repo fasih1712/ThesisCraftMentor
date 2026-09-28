@@ -90,6 +90,11 @@
     --bg:#f6f2e7;
     --surface:#ffffff;
     --heading:#0c2038;
+    --navy-700:#1a4267;
+    --white:#ffffff;
+    --radius-s:4px;
+    --maxw:1120px;
+    --ease:cubic-bezier(.2,.7,.3,1);
   }
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
@@ -114,17 +119,107 @@
   *{box-sizing:border-box;}
   body{margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; font-size:1.05rem; line-height:1.75;}
   a{color:var(--gold-700);}
-  .site-nav{background:var(--navy-900); border-bottom:1px solid rgba(212,175,55,0.25);}
-  .nav-inner{max-width:1120px; margin:0 auto; padding:14px 28px; display:flex; align-items:center; justify-content:space-between; gap:16px;}
-  .brand{display:flex; align-items:center; gap:10px; text-decoration:none;}
+  img{max-width:100%; display:block;}
+  /* nav */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(12,32,56,0.94);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid rgba(212,175,55,0.25);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; color:var(--paper);}
   .brand img{height:38px; width:38px; border-radius:50%; box-shadow:0 0 0 1px rgba(212,175,55,0.4);}
-  .brand-name{font-family:'Fraunces',serif; font-size:1.05rem; color:#fff; line-height:1.15;}
-  .btn{display:inline-flex; align-items:center; padding:10px 18px; border-radius:999px; font-weight:600; font-size:0.92rem; text-decoration:none; background:var(--gold-500); color:var(--navy-900);}
-  .btn:hover{background:var(--gold-400);}
-  .nav-right{display:flex; align-items:center; gap:18px;}
-  .nav-link{color:rgba(246,242,231,0.85); text-decoration:none; font-weight:500; font-size:0.92rem;}
-  .nav-link:hover{color:var(--gold-400);}
-  @media (max-width:420px){ .nav-right{gap:12px;} .brand-name{display:none;} }
+  .brand-name{font-family:'Fraunces',serif; font-size:1.05rem; color:var(--white); line-height:1.15;}
+  .brand-name small{display:block; font-family:'Inter',sans-serif; font-size:0.62rem; letter-spacing:0.09em; color:var(--gold-400); font-weight:500;}
+  nav.links{display:flex; gap:30px; align-items:center;}
+  nav.links a{position:relative; color:var(--paper); font-size:0.92rem; opacity:0.85; transition:opacity .2s;}
+  nav.links a::after{content:""; position:absolute; left:0; right:0; bottom:-6px; height:1px; background:var(--gold-400); transform:scaleX(0); transform-origin:left; transition:transform .25s var(--ease);}
+  nav.links a:hover{opacity:1;}
+  nav.links a:hover::after{transform:scaleX(1);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:12px 22px; border-radius:var(--radius-s);
+    font-size:0.92rem; font-weight:600; cursor:pointer; border:1px solid transparent;
+    transition:transform .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .btn:hover{transform:translateY(-2px); box-shadow:0 14px 24px -12px rgba(0,0,0,0.35);}
+  .btn-gold{background:var(--gold-500); color:var(--navy-900);}
+  .btn-gold:hover{background:var(--gold-400);}
+  .btn-ghost{background:transparent; border-color:rgba(246,242,231,0.4); color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--gold-400); color:var(--gold-400);}
+  .nav-cta{display:none;}
+  @media (min-width:860px){ .nav-cta{display:inline-flex;} }
+
+  .menu-toggle{display:none; background:none; border:none; color:var(--paper); padding:6px; cursor:pointer;}
+  .menu-toggle svg{width:24px; height:24px; display:block;}
+
+  .theme-toggle{
+    display:inline-flex; align-items:center; justify-content:center; flex:none;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid rgba(212,175,55,0.35); background:rgba(246,242,231,0.06);
+    color:var(--gold-400); cursor:pointer;
+    transition:background .2s var(--ease), border-color .2s var(--ease), transform .2s var(--ease);
+  }
+  .theme-toggle:hover{background:rgba(212,175,55,0.18); border-color:var(--gold-400); transform:translateY(-2px);}
+  .theme-toggle svg{width:18px; height:18px; display:none;}
+  .theme-toggle .icon-sun{display:block;}
+  :root[data-theme="dark"] .theme-toggle .icon-sun{display:none;}
+  :root[data-theme="dark"] .theme-toggle .icon-moon{display:block;}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .theme-toggle .icon-sun{display:none;}
+    :root:not([data-theme="light"]) .theme-toggle .icon-moon{display:block;}
+  }
+  @media (max-width:859px){
+    nav.links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--navy-900); border-bottom:1px solid rgba(212,175,55,0.25);
+      max-height:0; overflow:hidden;
+      transition:max-height .3s var(--ease);
+    }
+    nav.links a{padding:16px 28px; border-top:1px solid rgba(212,175,55,0.14);}
+    nav.links a::after{display:none;}
+    header.site-nav.nav-open nav.links{max-height:320px;}
+    .menu-toggle{display:block;}
+  }
+
+  .btn{text-decoration:none;}
+  .cta .btn{margin-top:4px;}
+  /* footer */
+  footer{background:var(--navy-900); color:rgba(246,242,231,0.6); padding:38px 0;}
+  footer a{color:inherit; text-decoration:none;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .footer-inner{display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; font-size:0.85rem;}
+  .footer-inner .brand img{height:28px; width:28px;}
+  .footer-links{display:flex; gap:22px;}
+  .footer-links a:hover{color:var(--gold-400);}
+  nav.links a, .brand{text-decoration:none;}
+  /* whatsapp float */
+  .wa-float{
+    position:fixed; bottom:24px; right:24px; z-index:60;
+    width:58px; height:58px; border-radius:50%;
+    background:#1d8b4a;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.5);
+    transition:transform .2s var(--ease), box-shadow .2s var(--ease);
+  }
+  .wa-float::before{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    background:#1d8b4a; opacity:0.55; z-index:-1; pointer-events:none;
+    animation:wa-pulse 2.4s ease-out infinite;
+  }
+  @keyframes wa-pulse{
+    0%{transform:scale(1); opacity:0.55;}
+    100%{transform:scale(1.9); opacity:0;}
+  }
+  .wa-float:hover{transform:translateY(-3px) scale(1.04); box-shadow:0 16px 32px -10px rgba(0,0,0,0.55);}
+  .wa-float svg{width:28px; height:28px; fill:var(--white);}
+
+  @media (max-width:400px){ .wrap{padding:0 18px;} .nav-inner{padding:12px 18px; gap:12px;} .brand-name{font-size:0.92rem;} .brand img{height:32px; width:32px;} .wa-float{width:50px; height:50px; bottom:16px; right:16px;} .wa-float svg{width:24px; height:24px;} }
   article{max-width:720px; margin:0 auto; padding:56px 28px 72px;}
   .crumbs{font-size:0.85rem; color:var(--ink-soft); margin-bottom:18px;}
   .crumbs a{color:var(--ink-soft);}
@@ -148,12 +243,7 @@
   .cta h2{color:var(--paper); margin-top:0;}
   .related{margin-top:40px; padding-top:24px; border-top:1px solid var(--paper-line);}
   .related strong{font-family:'Fraunces',serif; color:var(--heading);}
-  footer{background:var(--navy-900); color:rgba(246,242,231,0.6); padding:28px; text-align:center; font-size:0.88rem;}
-  footer a{color:rgba(246,242,231,0.8);}
   @media (max-width:520px){
-    .nav-inner{padding:12px 16px;}
-    .brand-name{font-size:0.92rem;}
-    .nav-inner .btn{padding:8px 14px; font-size:0.85rem;}
     article{padding:40px 16px 56px;}
     .cta{padding:24px 20px;}
   }
@@ -165,12 +255,23 @@
   <div class="nav-inner">
     <a class="brand" href="/">
       <img src="/assets/logo-sm.webp" width="38" height="38" alt="Thesis Craft Mentors emblem, gold laurel on navy">
-      <span class="brand-name">Thesis Craft Mentors</span>
+      <span class="brand-name">Thesis Craft Mentors<small>ACADEMIC WRITING PARTNER</small></span>
     </a>
-    <div class="nav-right">
-      <a class="nav-link" href="/#blog">Blog</a>
-      <a class="btn" href="/#contact">Get a free quote</a>
-    </div>
+    <nav class="links" id="primaryNav">
+      <a href="/#services">Services</a>
+      <a href="/#process">Process</a>
+      <a href="/#reviews">Reviews</a>
+      <a href="/#blog">Blog</a>
+      <a href="/#contact">Contact</a>
+    </nav>
+    <a class="btn btn-gold nav-cta" href="/#contact">Get a free quote</a>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    </button>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primaryNav">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
   </div>
 </header>
 
@@ -280,7 +381,7 @@
   <section class="cta">
     <h2>Want feedback on your proposal?</h2>
     <p>Our mentors help students sharpen research questions, strengthen methodology sections and structure proposals that supervisors approve. Confidential, with free revisions.</p>
-    <p><a class="btn" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
+    <p><a class="btn btn-gold" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
   </section>
   <aside class="related">
     <strong>More from the blog</strong>
@@ -293,9 +394,66 @@
 </main>
 
 <footer>
-  <a href="/">Thesis Craft Mentors</a> &middot; <a href="/#services">Services</a> &middot; <a href="/#blog">Blog</a> &middot; <a href="/#contact">Contact</a><br>
-  &copy; 2026 thesiscraftmentors.com
+  <div class="wrap footer-inner">
+    <a class="brand" href="/">
+      <img src="/assets/logo-sm.webp" width="28" height="28" loading="lazy" alt="Thesis Craft Mentors emblem, gold laurel on navy">
+      <span class="brand-name" style="color:rgba(246,242,231,0.7); font-size:0.9rem;">Thesis Craft Mentors</span>
+    </a>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/thesiscraftmentors/" target="_blank" rel="noopener">Instagram</a>
+      <a href="/#blog">Blog</a>
+      <a href="/#contact">Contact</a>
+    </div>
+    <span>&copy; 2026 thesiscraftmentors.com</span>
+  </div>
 </footer>
 
+<a class="wa-float" href="https://wa.me/447440736543" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.4.7 4.6 1.9 6.5L4 29l7.7-1.9c1.8 1 3.9 1.5 6.3 1.5 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.5-5.5-1.5l-.4-.2-4.6 1.2 1.2-4.5-.3-.4C5.3 17.7 4.7 16.4 4.7 15c0-6.2 5.1-11.3 11.3-11.3S27.3 8.8 27.3 15 22.2 24.8 16 24.8zm6.2-8.4c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-2-1.8-2.3-.2-.3 0-.5.1-.7.1-.1.3-.4.5-.5.2-.2.2-.3.3-.5.1-.2 0-.4 0-.6-.1-.2-.8-1.9-1.1-2.6-.3-.7-.6-.6-.8-.6h-.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.8s1.2 3.3 1.4 3.5c.2.2 2.4 3.7 5.9 5.1.8.3 1.5.6 2 .7.8.3 1.6.2 2.2.1.7-.1 2-.8 2.3-1.6.3-.8.3-1.4.2-1.6 0-.1-.3-.2-.6-.4z"/></svg>
+</a>
+
+<script>
+  /* theme toggle: defaults to system preference, overridden and remembered once the user picks */
+  (function(){
+    var themeToggle = document.getElementById('themeToggle');
+    var mql = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+
+    function currentTheme(){
+      var attr = document.documentElement.getAttribute('data-theme');
+      if (attr === 'light' || attr === 'dark') return attr;
+      return (mql && mql.matches) ? 'dark' : 'light';
+    }
+    function reflect(theme){
+      themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    }
+    reflect(currentTheme());
+
+    themeToggle.addEventListener('click', function(){
+      var next = currentTheme() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      reflect(next);
+      try{ localStorage.setItem('theme', next); }catch(e){}
+    });
+
+    if (mql && mql.addEventListener) {
+      mql.addEventListener('change', function(){
+        if (!document.documentElement.getAttribute('data-theme')) reflect(currentTheme());
+      });
+    }
+  })();
+
+  var toggle = document.getElementById('menuToggle');
+  var siteNav = document.querySelector('.site-nav');
+  toggle.addEventListener('click', function(){
+    var open = siteNav.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('#primaryNav a').forEach(function(link){
+    link.addEventListener('click', function(){
+      siteNav.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
 </body>
 </html>
