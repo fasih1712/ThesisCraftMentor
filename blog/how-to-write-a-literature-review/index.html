@@ -28,20 +28,47 @@
   "@graph": [
     {
       "@type": "BlogPosting",
-      "headline": "How to Write a Literature Review for Your Thesis (Step-by-Step Guide)",
+      "headline": "How to Write a Literature Review for Your Thesis: A Step-by-Step Guide",
       "description": "A practical, step-by-step guide to writing a thesis literature review: finding sources, organising themes, synthesising research, spotting the gap and avoiding common mistakes.",
       "image": "https://thesiscraftmentors.com/assets/logo.png",
       "datePublished": "2026-09-23",
       "dateModified": "2026-09-23",
-      "author": {"@type": "Organization", "name": "Thesis Craft Mentors", "url": "https://thesiscraftmentors.com/"},
-      "publisher": {"@type": "Organization", "name": "Thesis Craft Mentors", "logo": {"@type": "ImageObject", "url": "https://thesiscraftmentors.com/assets/logo.png"}},
+      "author": {
+        "@type": "Organization",
+        "name": "Thesis Craft Mentors",
+        "url": "https://thesiscraftmentors.com/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Thesis Craft Mentors",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://thesiscraftmentors.com/assets/logo.png"
+        }
+      },
       "mainEntityOfPage": "https://thesiscraftmentors.com/blog/how-to-write-a-literature-review/"
     },
     {
       "@type": "BreadcrumbList",
       "itemListElement": [
-        {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://thesiscraftmentors.com/"},
-        {"@type": "ListItem", "position": 2, "name": "How to Write a Literature Review", "item": "https://thesiscraftmentors.com/blog/how-to-write-a-literature-review/"}
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://thesiscraftmentors.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blog",
+          "item": "https://thesiscraftmentors.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How to Write a Literature Review for Your Thesis",
+          "item": "https://thesiscraftmentors.com/blog/how-to-write-a-literature-review/"
+        }
       ]
     }
   ]
@@ -100,6 +127,10 @@
   .brand-name{font-family:'Fraunces',serif; font-size:1.05rem; color:#fff; line-height:1.15;}
   .btn{display:inline-flex; align-items:center; padding:10px 18px; border-radius:999px; font-weight:600; font-size:0.92rem; text-decoration:none; background:var(--gold-500); color:var(--navy-900);}
   .btn:hover{background:var(--gold-400);}
+  .nav-right{display:flex; align-items:center; gap:18px;}
+  .nav-link{color:rgba(246,242,231,0.85); text-decoration:none; font-weight:500; font-size:0.92rem;}
+  .nav-link:hover{color:var(--gold-400);}
+  @media (max-width:420px){ .nav-right{gap:12px;} .brand-name{display:none;} }
   article{max-width:720px; margin:0 auto; padding:56px 28px 72px;}
   .crumbs{font-size:0.85rem; color:var(--ink-soft); margin-bottom:18px;}
   .crumbs a{color:var(--ink-soft);}
@@ -121,6 +152,8 @@
   .table-wrap{overflow-x:auto;}
   .cta{background:var(--navy-900); color:rgba(246,242,231,0.85); border-radius:16px; padding:32px; margin-top:56px;}
   .cta h2{color:var(--paper); margin-top:0;}
+  .related{margin-top:40px; padding-top:24px; border-top:1px solid var(--paper-line);}
+  .related strong{font-family:'Fraunces',serif; color:var(--heading);}
   footer{background:var(--navy-900); color:rgba(246,242,231,0.6); padding:28px; text-align:center; font-size:0.88rem;}
   footer a{color:rgba(246,242,231,0.8);}
   @media (max-width:520px){
@@ -140,13 +173,16 @@
       <img src="/assets/logo-sm.webp" width="38" height="38" alt="Thesis Craft Mentors emblem, gold laurel on navy">
       <span class="brand-name">Thesis Craft Mentors</span>
     </a>
-    <a class="btn" href="/#contact">Get a free quote</a>
+    <div class="nav-right">
+      <a class="nav-link" href="/blog/">Blog</a>
+      <a class="btn" href="/#contact">Get a free quote</a>
+    </div>
   </div>
 </header>
 
 <main>
 <article>
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Blog</nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a></nav>
   <h1>How to Write a Literature Review for Your Thesis: A Step-by-Step Guide</h1>
   <p class="meta">By Thesis Craft Mentors &middot; <time datetime="2026-09-23">23 September 2026</time> &middot; 9 min read</p>
 
@@ -249,11 +285,18 @@
     <p>Our mentors help students organise sources, build thematic structures, sharpen synthesis and get referencing right, one chapter at a time. Confidential, deadline-focused, with free revisions.</p>
     <p><a class="btn" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a></p>
   </section>
+  <aside class="related">
+    <strong>More from the blog</strong>
+    <ul>
+      <li><a href="/blog/how-to-write-a-research-proposal/">How to Write a Research Proposal That Gets Approved</a></li>
+      <li><a href="/blog/how-to-choose-a-dissertation-topic/">How to Choose a Dissertation Topic: 8 Practical Steps</a></li>
+    </ul>
+  </aside>
 </article>
 </main>
 
 <footer>
-  <a href="/">Thesis Craft Mentors</a> &middot; <a href="/#services">Services</a> &middot; <a href="/#contact">Contact</a><br>
+  <a href="/">Thesis Craft Mentors</a> &middot; <a href="/#services">Services</a> &middot; <a href="/blog/">Blog</a> &middot; <a href="/#contact">Contact</a><br>
   &copy; 2026 thesiscraftmentors.com
 </footer>
 
