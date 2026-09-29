@@ -419,9 +419,20 @@ fbq('track', 'PageView');
   .uni-marquee{overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent); mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
   .uni-track{display:flex; width:max-content; gap:16px; list-style:none; margin:0; padding:4px 0; animation:uni-scroll 45s linear infinite;}
   .uni-marquee:hover .uni-track{animation-play-state:paused;}
-  .uni{display:flex; flex-direction:column; align-items:flex-start; gap:2px; flex:none; padding:14px 22px; border:1px solid rgba(212,175,55,0.25); border-radius:var(--radius-m); background:rgba(246,242,231,0.04); text-align:left;}
+  .uni{display:flex; align-items:center; gap:14px; flex:none; padding:12px 22px 12px 12px; border:1px solid rgba(212,175,55,0.25); border-radius:999px; background:rgba(246,242,231,0.04); text-align:left; transition:border-color .3s var(--ease), background .3s var(--ease);}
+  .uni:hover{border-color:var(--gold-400); background:rgba(212,175,55,0.08);}
+  .uni-mono{
+    flex:none; width:52px; height:52px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; font-size:0.95rem; letter-spacing:.02em; color:var(--gold-400);
+    background:radial-gradient(circle at 35% 30%, var(--navy-700), var(--navy-900));
+    box-shadow:inset 0 0 0 1.5px var(--gold-500), inset 0 0 0 4px var(--navy-900), inset 0 0 0 5px rgba(212,175,55,0.45);
+  }
+  .uni-text{display:flex; flex-direction:column; gap:3px;}
   .uni-name{font-family:'Fraunces',serif; font-size:1.02rem; color:var(--white); white-space:nowrap;}
-  .uni-country{font-size:0.75rem; color:rgba(246,242,231,0.6);}
+  .uni-country{display:flex; align-items:center; gap:6px; font-size:0.75rem; color:rgba(246,242,231,0.65);}
+  .uni-country .flag{width:18px; height:12px; border-radius:2px; box-shadow:0 0 0 1px rgba(255,255,255,0.15);}
+  @media (max-width:520px){ .uni-mono{width:44px; height:44px; font-size:0.85rem;} .uni-name{font-size:0.95rem;} }
   @keyframes uni-scroll{to{transform:translateX(calc(-50% - 8px));}}
   /* review animation + autoplay progress */
   .review-viewport{position:relative;}
@@ -771,24 +782,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p class="uni-label">Students we have supported study at</p>
         <div class="uni-marquee">
           <ul class="uni-track">
-            <li class="uni"><span class="uni-name">University of Essex</span><span class="uni-country">UK</span></li>
-            <li class="uni"><span class="uni-name">FAU Erlangen-Nürnberg</span><span class="uni-country">Germany</span></li>
-            <li class="uni"><span class="uni-name">Technical University of Munich</span><span class="uni-country">Germany</span></li>
-            <li class="uni"><span class="uni-name">Imperial College London</span><span class="uni-country">UK</span></li>
-            <li class="uni"><span class="uni-name">University of Passau</span><span class="uni-country">Germany</span></li>
-            <li class="uni"><span class="uni-name">University of Chester</span><span class="uni-country">UK</span></li>
-            <li class="uni"><span class="uni-name">Saarland University</span><span class="uni-country">Germany</span></li>
-            <li class="uni"><span class="uni-name">Fulda University of Applied Sciences</span><span class="uni-country">Germany</span></li>
-            <li class="uni"><span class="uni-name">BTU Cottbus-Senftenberg</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">University of Essex</span><span class="uni-country">UK</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">FAU Erlangen-Nürnberg</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">Technical University of Munich</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">Imperial College London</span><span class="uni-country">UK</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">University of Passau</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">University of Chester</span><span class="uni-country">UK</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">Saarland University</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">Fulda University of Applied Sciences</span><span class="uni-country">Germany</span></li>
-            <li class="uni" aria-hidden="true"><span class="uni-name">BTU Cottbus-Senftenberg</span><span class="uni-country">Germany</span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">UoE</span><span class="uni-text"><span class="uni-name">University of Essex</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">FAU</span><span class="uni-text"><span class="uni-name">FAU Erlangen-Nürnberg</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">TUM</span><span class="uni-text"><span class="uni-name">Technical University of Munich</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">ICL</span><span class="uni-text"><span class="uni-name">Imperial College London</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">UP</span><span class="uni-text"><span class="uni-name">University of Passau</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">UoC</span><span class="uni-text"><span class="uni-name">University of Chester</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">UdS</span><span class="uni-text"><span class="uni-name">Saarland University</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">HSF</span><span class="uni-text"><span class="uni-name">Fulda University of Applied Sciences</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni"><span class="uni-mono" aria-hidden="true">BTU</span><span class="uni-text"><span class="uni-name">BTU Cottbus-Senftenberg</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">UoE</span><span class="uni-text"><span class="uni-name">University of Essex</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">FAU</span><span class="uni-text"><span class="uni-name">FAU Erlangen-Nürnberg</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">TUM</span><span class="uni-text"><span class="uni-name">Technical University of Munich</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">ICL</span><span class="uni-text"><span class="uni-name">Imperial College London</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">UP</span><span class="uni-text"><span class="uni-name">University of Passau</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">UoC</span><span class="uni-text"><span class="uni-name">University of Chester</span><span class="uni-country"><svg class="flag" viewBox="0 0 60 30" aria-hidden="true"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30M60 0L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30M60 0L0 30" stroke="#C8102E" stroke-width="2"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></svg>UK</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">UdS</span><span class="uni-text"><span class="uni-name">Saarland University</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">HSF</span><span class="uni-text"><span class="uni-name">Fulda University of Applied Sciences</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
+            <li class="uni" aria-hidden="true"><span class="uni-mono" aria-hidden="true">BTU</span><span class="uni-text"><span class="uni-name">BTU Cottbus-Senftenberg</span><span class="uni-country"><svg class="flag" viewBox="0 0 5 3" aria-hidden="true"><path fill="#000" d="M0 0h5v1H0z"/><path fill="#D00" d="M0 1h5v1H0z"/><path fill="#FFCE00" d="M0 2h5v1H0z"/></svg>Germany</span></span></li>
           </ul>
         </div>
       </div>
