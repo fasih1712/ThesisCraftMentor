@@ -3,7 +3,7 @@ thesiscraftmentors.com, www.thesiscraftmentors.com {
     redir /blog /#blog
     redir /blog/ /#blog
     file_server
-    encode gzip
+    encode zstd gzip
 
     header /assets/* Cache-Control "public, max-age=2592000, immutable"
 }

@@ -107,10 +107,6 @@ fbq('track', 'PageView');
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
-  @media (prefers-reduced-motion: reduce){
-    html{scroll-behavior:auto;}
-    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
-  }
   body{
     margin:0;
     font-family:'Inter',sans-serif;
@@ -167,25 +163,10 @@ fbq('track', 'PageView');
 
   /* scroll progress bar */
   .scroll-progress{
-    position:fixed; top:0; left:0; height:3px; width:0%; z-index:70;
+    position:fixed; top:0; left:0; right:0; height:3px; z-index:70;
+    transform:scaleX(0); transform-origin:left; will-change:transform;
     background:linear-gradient(90deg, var(--gold-700), var(--gold-500), var(--gold-400));
   }
-
-  /* custom cursor, desktop with a mouse only */
-  body.has-cursor, body.has-cursor a, body.has-cursor button, body.has-cursor input, body.has-cursor textarea{cursor:none;}
-  .cursor-dot, .cursor-ring{
-    position:fixed; top:0; left:0; z-index:9999; pointer-events:none;
-    border-radius:50%; transform:translate(-50%,-50%); opacity:0;
-    transition:opacity .25s ease;
-    will-change:transform;
-  }
-  .cursor-dot{width:6px; height:6px; background:var(--gold-500);}
-  .cursor-ring{
-    width:34px; height:34px; border:1px solid rgba(212,175,55,0.55);
-    transition:opacity .25s ease, width .2s var(--ease), height .2s var(--ease), border-color .2s var(--ease), background .2s var(--ease);
-  }
-  .cursor-dot.is-visible, .cursor-ring.is-visible{opacity:1;}
-  .cursor-ring.is-hovering{width:52px; height:52px; border-color:var(--gold-400); background:rgba(212,175,55,0.08);}
 
   /* nav */
   header.site-nav{
@@ -294,6 +275,63 @@ fbq('track', 'PageView');
   .hero-mark .orbit-line.slow{inset:-46px; border-color:rgba(212,175,55,0.16); animation-duration:64s; animation-direction:reverse;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
+  /* intro splash: pure CSS so it always clears, even without JS */
+  .intro{
+    position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 45%, var(--navy-800), var(--navy-900) 70%);
+    pointer-events:none; animation:intro-out .5s var(--ease) 1.25s forwards;
+  }
+  .intro-skip .intro{display:none;}
+  .intro-logo{position:relative; width:112px; height:112px;}
+  .intro-logo img{width:100%; height:100%; border-radius:50%; animation:intro-pop .7s cubic-bezier(.3,1.4,.5,1) .1s both;}
+  .intro-logo svg{position:absolute; left:-14px; top:-14px; width:140px; height:140px; transform:rotate(-90deg);}
+  .intro-logo circle{fill:none; stroke:var(--gold-500); stroke-width:2; stroke-linecap:round; stroke-dasharray:409; stroke-dashoffset:409; animation:intro-ring .9s var(--ease) .25s forwards;}
+  .intro-name{position:absolute; top:calc(50% + 86px); left:0; right:0; text-align:center; font-family:'Fraunces',serif; font-size:1rem; letter-spacing:.18em; text-transform:uppercase; color:var(--gold-400); animation:fadeUp .6s var(--ease) .55s both;}
+  @keyframes intro-pop{from{opacity:0; transform:scale(.6) rotate(-20deg);} to{opacity:1; transform:none;}}
+  @keyframes intro-ring{to{stroke-dashoffset:0;}}
+  @keyframes intro-out{to{opacity:0; visibility:hidden;}}
+  body:not(.intro-skip) .hero h1{animation-delay:1.35s;}
+  body:not(.intro-skip) .hero .lede{animation-delay:1.55s;}
+  body:not(.intro-skip) .hero .cta-row{animation-delay:1.65s;}
+  body:not(.intro-skip) .hero-badges{animation-delay:1.75s;}
+  body:not(.intro-skip) .hero-mark{animation-delay:1.45s;}
+
+  /* headline words rise in one by one */
+  .hero h1.split{animation:none;}
+  .hero h1 .w{display:inline-block; opacity:0; transform:translateY(22px); animation:fadeUp .65s var(--ease) forwards; animation-delay:calc(var(--i) * 55ms + var(--h1-base, 0ms));}
+  body:not(.intro-skip) .hero h1 .w{--h1-base:1300ms;}
+
+  /* hero logo: gentle float, glow pulse and a periodic gold shine */
+  .hero-mark .ring{animation:float 6s ease-in-out 2.2s infinite;}
+  .hero-mark .ring::after{
+    content:""; position:absolute; inset:0; border-radius:50%; pointer-events:none;
+    animation:glow 3.2s ease-out 2.2s infinite;
+  }
+  .hero-mark .shine{position:absolute; inset:0; border-radius:50%; overflow:hidden; pointer-events:none;}
+  .hero-mark .shine::before{
+    content:""; position:absolute; top:-20%; bottom:-20%; width:35%; left:-60%;
+    background:linear-gradient(100deg, transparent, rgba(255,241,200,0.35), transparent);
+    transform:skewX(-18deg); animation:shine 5s ease-in-out 2.6s infinite;
+  }
+  @keyframes float{0%,100%{transform:translateY(0);} 50%{transform:translateY(-12px);}}
+  @keyframes glow{0%{box-shadow:0 0 0 0 rgba(212,175,55,0.35);} 100%{box-shadow:0 0 0 26px rgba(212,175,55,0);}}
+  @keyframes shine{0%{left:-60%;} 35%,100%{left:130%;}}
+
+  /* nav logo spins in once, turns on hover */
+  header.site-nav .brand img{animation:logo-in .9s var(--ease) both; transition:transform .5s var(--ease);}
+  body:not(.intro-skip) header.site-nav .brand img{animation-delay:1.2s;}
+  header.site-nav .brand:hover img{transform:rotate(-12deg) scale(1.06);}
+  @keyframes logo-in{from{opacity:0; transform:rotate(-180deg) scale(.4);} to{opacity:1; transform:none;}}
+
+  /* button shine on hover */
+  .btn{position:relative; overflow:hidden;}
+  .btn::after{content:""; position:absolute; top:0; bottom:0; left:-75%; width:50%; background:linear-gradient(100deg, transparent, rgba(255,255,255,0.35), transparent); transform:skewX(-20deg); pointer-events:none;}
+  .btn:hover::after{left:130%; transition:left .7s var(--ease);}
+
+  /* section kicker line draws in */
+  .js-ready .section-head.reveal .kicker::before{width:0; transition:width .7s var(--ease) .2s;}
+  .js-ready .section-head.reveal.in-view .kicker::before{width:22px;}
+
   /* section heads */
   .section-head{max-width:640px; margin-bottom:56px;}
   .section-head h2{font-size:clamp(1.75rem, 3vw, 2.35rem); color:var(--heading); transition:color .3s ease;}
@@ -385,13 +423,6 @@ fbq('track', 'PageView');
   .uni-name{font-family:'Fraunces',serif; font-size:1.02rem; color:var(--white); white-space:nowrap;}
   .uni-country{font-size:0.75rem; color:rgba(246,242,231,0.6);}
   @keyframes uni-scroll{to{transform:translateX(calc(-50% - 8px));}}
-  /* keep both carousels moving even when the OS asks for reduced motion */
-  @media (prefers-reduced-motion: reduce){
-    .uni-track{animation-duration:45s !important;}
-    .review-track{transition-duration:.55s !important;}
-    .review-progress span.run{animation-duration:var(--review-delay,3s) !important;}
-    .review-card .mark, .review-card .quote, .review-card .who{transition-duration:.6s !important;}
-  }
   /* review animation + autoplay progress */
   .review-viewport{position:relative;}
   .review-progress{position:absolute; left:0; right:0; bottom:0; height:3px; background:rgba(246,242,231,0.08); overflow:hidden;}
@@ -503,6 +534,18 @@ fbq('track', 'PageView');
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 -->
 
+<div class="intro" aria-hidden="true">
+  <div class="intro-logo">
+    <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="65"/></svg>
+    <img src="assets/logo-sm.webp" width="112" height="112" alt="">
+  </div>
+  <div class="intro-name">Thesis Craft Mentors</div>
+</div>
+<script>
+  /* show the intro once per browser session */
+  try{ if (sessionStorage.getItem('introSeen')) document.body.classList.add('intro-skip'); else sessionStorage.setItem('introSeen','1'); }catch(e){}
+</script>
+
 <header class="site-nav">
   <div class="nav-inner">
     <a class="brand" href="#top">
@@ -550,6 +593,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="orbit-line slow"></div>
           <div class="orbit-line"></div>
           <img src="assets/logo.webp" alt="Thesis Craft Mentors emblem, gold laurel on navy" fetchpriority="high">
+          <span class="shine" aria-hidden="true"></span>
         </div>
       </div>
     </div>
@@ -858,79 +902,51 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script>
   document.body.classList.add('js-ready');
-  var reduceMotionGlobal = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* split hero headline into words for a staggered entrance */
+  (function(){
+    var h1 = document.querySelector('.hero h1');
+    if (!h1) return;
+    var text = h1.textContent.trim();
+    h1.setAttribute('aria-label', text);
+    h1.innerHTML = text.split(/\s+/).map(function(w, i){
+      return '<span class="w" aria-hidden="true" style="--i:' + i + '">' + w + '</span>';
+    }).join(' ');
+    h1.classList.add('split');
+  })();
 
   /* scroll progress bar */
   (function(){
     var bar = document.createElement('div');
     bar.className = 'scroll-progress';
     document.body.appendChild(bar);
+    var ticking = false;
     function update(){
+      ticking = false;
       var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
-      bar.style.width = pct + '%';
+      var pct = docHeight > 0 ? window.scrollY / docHeight : 0;
+      bar.style.transform = 'scaleX(' + pct.toFixed(4) + ')';
     }
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    function onScroll(){ if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
     update();
   })();
 
   /* subtle hero parallax */
   (function(){
     var hero = document.querySelector('.hero');
-    if (!hero || reduceMotionGlobal) return;
+    if (!hero) return;
+    var heroH = hero.offsetHeight, ticking = false;
+    window.addEventListener('resize', function(){ heroH = hero.offsetHeight; });
     window.addEventListener('scroll', function(){
-      var offset = Math.min(window.scrollY, hero.offsetHeight);
-      hero.style.setProperty('--parallax', (offset * 0.15).toFixed(1));
+      if (ticking || window.scrollY > heroH) return;
+      ticking = true;
+      requestAnimationFrame(function(){
+        ticking = false;
+        hero.style.setProperty('--parallax', (Math.min(window.scrollY, heroH) * 0.15).toFixed(1));
+      });
     }, { passive: true });
-  })();
-
-  /* custom cursor, desktop pointer devices only */
-  (function(){
-    var supportsCursor = !window.matchMedia || window.matchMedia('(pointer:fine)').matches;
-    if (!supportsCursor) return;
-
-    document.body.classList.add('has-cursor');
-    var dot = document.createElement('div');
-    dot.className = 'cursor-dot';
-    var ring = document.createElement('div');
-    ring.className = 'cursor-ring';
-    document.body.appendChild(dot);
-    document.body.appendChild(ring);
-
-    var mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-    var dotX = mouseX, dotY = mouseY;
-    var ringX = mouseX, ringY = mouseY;
-
-    document.addEventListener('mousemove', function(e){
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      dot.classList.add('is-visible');
-      ring.classList.add('is-visible');
-    });
-    document.addEventListener('mouseleave', function(){
-      dot.classList.remove('is-visible');
-      ring.classList.remove('is-visible');
-    });
-
-    function loop(){
-      dotX += (mouseX - dotX) * 0.45;
-      dotY += (mouseY - dotY) * 0.45;
-      ringX += (mouseX - ringX) * 0.12;
-      ringY += (mouseY - ringY) * 0.12;
-      dot.style.transform = 'translate(' + dotX + 'px,' + dotY + 'px) translate(-50%,-50%)';
-      ring.style.transform = 'translate(' + ringX + 'px,' + ringY + 'px) translate(-50%,-50%)';
-      requestAnimationFrame(loop);
-    }
-    loop();
-
-    var hoverTargets = 'a, button, input, textarea, .review-dot, .menu-toggle';
-    document.addEventListener('mouseover', function(e){
-      if (e.target.closest && e.target.closest(hoverTargets)) ring.classList.add('is-hovering');
-    });
-    document.addEventListener('mouseout', function(e){
-      if (e.target.closest && e.target.closest(hoverTargets)) ring.classList.remove('is-hovering');
-    });
   })();
 
   /* theme toggle: defaults to system preference, overridden and remembered once the user picks */
