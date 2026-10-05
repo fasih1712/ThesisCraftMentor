@@ -24,16 +24,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 -->
-<script>
-!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
-n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
-document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1135901393903127');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1135901393903127&ev=PageView&noscript=1"/></noscript>
 <title>Thesis Craft Mentors | Thesis & Assignment Writing Help for Students</title>
 <meta name="description" content="Expert thesis mentoring, assignment writing, research support, editing, formatting and referencing for students. Confidential, deadline-focused, one chapter at a time.">
 <meta name="robots" content="index, follow">
@@ -1083,12 +1073,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in-view'); });
   }
 
-  /* WhatsApp CTA click tracking: fires once GTM/GA4/Meta Pixel is enabled above, harmless otherwise */
+  /* WhatsApp CTA click tracking: fires once GTM/GA4 is enabled above, harmless otherwise */
   document.querySelectorAll('a[href^="https://wa.me/"]').forEach(function(link){
     link.addEventListener('click', function(){
       if (window.dataLayer) window.dataLayer.push({ event: 'whatsapp_click' });
       if (window.gtag) window.gtag('event', 'whatsapp_click');
-      if (window.fbq) window.fbq('trackCustom', 'WhatsAppClick');
     });
   });
 
