@@ -544,6 +544,30 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
     .wa-float{width:50px; height:50px; bottom:16px; right:16px;}
     .wa-float svg{width:24px; height:24px;}
   }
+
+  /* enquiry popup shown on every page load */
+  .lead-modal{
+    width:min(440px, calc(100% - 32px)); max-height:calc(100% - 32px); overflow:auto;
+    padding:0; border:1px solid var(--paper-line); border-radius:var(--radius-l);
+    background:var(--surface); color:var(--ink);
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.45);
+  }
+  .lead-modal[open]{animation:fadeUp .45s var(--ease) both;}
+  .lead-modal::backdrop{background:rgba(12,32,56,0.55); backdrop-filter:blur(3px);}
+  .lead-head{background:var(--navy-900); color:var(--paper); padding:24px 26px 20px; position:relative;}
+  .lead-head h2{margin:0; padding-right:34px; color:var(--white); font-size:1.3rem;}
+  .lead-head p{margin:6px 0 0; font-size:0.9rem; color:rgba(246,242,231,0.75);}
+  .lead-close{
+    position:absolute; top:12px; right:12px; width:34px; height:34px; border-radius:50%;
+    border:0; background:rgba(246,242,231,0.12); color:var(--paper); font-size:1.3rem; line-height:1; cursor:pointer;
+  }
+  .lead-close:hover{background:rgba(246,242,231,0.22);}
+  .lead-body{padding:22px 26px 24px; display:flex; flex-direction:column; gap:14px;}
+  .lead-body .field textarea{min-height:84px;}
+  .lead-body .btn{justify-content:center;}
+  .lead-alt{font-size:0.85rem; color:var(--ink-soft); text-align:center; margin:0;}
+  .lead-alt a{color:var(--gold-700); font-weight:600;}
+  @media (max-width:400px){ .lead-head{padding:22px 20px 18px;} .lead-body{padding:18px 20px 20px;} }
 </style>
 </head>
 <body>
@@ -884,6 +908,30 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 </main>
 
+<dialog class="lead-modal" id="leadModal" aria-labelledby="leadTitle">
+  <div class="lead-head">
+    <h2 id="leadTitle">Need help with your thesis?</h2>
+    <p>Share a few details and we will come back with a quote and timeline.</p>
+    <button class="lead-close" type="button" aria-label="Close">&times;</button>
+  </div>
+  <form class="lead-body" id="leadForm">
+    <div class="field">
+      <label for="lead-name">Full name</label>
+      <input id="lead-name" type="text" placeholder="Your name" required>
+    </div>
+    <div class="field">
+      <label for="lead-whatsapp">WhatsApp number</label>
+      <input id="lead-whatsapp" type="tel" placeholder="+XX XXX XXXXXXX" required>
+    </div>
+    <div class="field">
+      <label for="lead-message">What do you need, and by when?</label>
+      <textarea id="lead-message" placeholder="e.g. MBA dissertation, chapter 2, due in 3 weeks"></textarea>
+    </div>
+    <button class="btn btn-gold" type="submit">Send request</button>
+    <p class="lead-alt">Prefer chat? <a href="https://wa.me/447440736543" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
+  </form>
+</dialog>
+
 <footer>
   <div class="wrap footer-inner">
     <a class="brand" href="#top">
@@ -1099,13 +1147,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  document.getElementById('contactForm').addEventListener('submit', function(event){
-    event.preventDefault();
-    var form = event.currentTarget;
-    var name = form.querySelector('#name').value;
-    var whatsapp = form.querySelector('#whatsapp').value;
-    var topic = form.querySelector('#topic').value;
-    var message = form.querySelector('#message').value;
+  function sendEnquiry(name, whatsapp, topic, message){
+    if (window.fbq) window.fbq('track', 'Lead');
     var subject = encodeURIComponent('New assignment enquiry from ' + name);
     var body = encodeURIComponent(
       'Full name: ' + name +
@@ -1114,7 +1157,39 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       '\nAssignment details and deadline: ' + message
     );
     window.location.href = 'mailto:info@thesiscraftmentors.com?subject=' + subject + '&body=' + body;
+  }
+
+  document.getElementById('contactForm').addEventListener('submit', function(event){
+    event.preventDefault();
+    var form = event.currentTarget;
+    sendEnquiry(
+      form.querySelector('#name').value,
+      form.querySelector('#whatsapp').value,
+      form.querySelector('#topic').value,
+      form.querySelector('#message').value
+    );
   });
+
+  /* enquiry popup: shown on every page load, after the intro splash clears */
+  (function(){
+    var modal = document.getElementById('leadModal');
+    if (!modal || typeof modal.showModal !== 'function') return;
+    var delay = document.body.classList.contains('intro-skip') ? 600 : 2000;
+    setTimeout(function(){ if (!modal.open) modal.showModal(); }, delay);
+
+    modal.querySelector('.lead-close').addEventListener('click', function(){ modal.close(); });
+    modal.addEventListener('click', function(event){ if (event.target === modal) modal.close(); });
+    document.getElementById('leadForm').addEventListener('submit', function(event){
+      event.preventDefault();
+      sendEnquiry(
+        document.getElementById('lead-name').value,
+        document.getElementById('lead-whatsapp').value,
+        '',
+        document.getElementById('lead-message').value
+      );
+      modal.close();
+    });
+  })();
 </script>
 
 </body>
