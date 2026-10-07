@@ -659,7 +659,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="stats" aria-label="Our track record">
     <div class="wrap stats-grid">
       <div class="stat reveal"><div class="stat-num"><span class="count" data-target="500">500</span><span class="suffix">+</span></div><p class="stat-label">Students supported</p></div>
-      <div class="stat reveal"><div class="stat-num"><span class="count" data-target="1200">1200</span><span class="suffix">+</span></div><p class="stat-label">Chapters and assignments delivered</p></div>
+      <div class="stat reveal"><div class="stat-num"><span class="count" data-target="1200">1,200</span><span class="suffix">+</span></div><p class="stat-label">Chapters and assignments delivered</p></div>
       <div class="stat reveal"><div class="stat-num"><span class="count" data-target="98">98</span><span class="suffix">%</span></div><p class="stat-label">Delivered on or before deadline</p></div>
       <div class="stat reveal"><div class="stat-num"><span class="count" data-target="5">5</span><span class="suffix">+</span></div><p class="stat-label">Years of academic mentoring</p></div>
     </div>
@@ -1195,27 +1195,54 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     start();
   })();
 
-  /* stats counter: the final number is already in the HTML, this only animates up to it */
-  function countUp(el){
-    var target = parseInt(el.getAttribute('data-target'), 10);
-    if (!target || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var duration = 1600, startTime = null;
-    function frame(now){
-      if (!startTime) startTime = now;
-      var t = Math.min((now - startTime) / duration, 1);
-      el.textContent = Math.round(target * (1 - Math.pow(1 - t, 3)));
-      if (t < 1) requestAnimationFrame(frame);
+  /* stats counter: the final numbers are in the HTML; JS resets them to 0 and counts up
+     once the stats are on screen and the intro splash and enquiry popup are out of the way */
+  (function(){
+    var counts = document.querySelectorAll('.stats .count');
+    var stats = document.querySelector('.stats');
+    if (!counts.length || !stats) return;
+    var format = function(n){ return n.toLocaleString('en-GB'); };
+    counts.forEach(function(el){ el.textContent = '0'; });
+
+    var clear = false, inView = false, started = false;
+    function countUp(el){
+      var target = parseInt(el.getAttribute('data-target'), 10) || 0;
+      var duration = 2200, startTime = null;
+      function frame(now){
+        if (!startTime) startTime = now;
+        var t = Math.min((now - startTime) / duration, 1);
+        el.textContent = format(Math.round(target * (1 - Math.pow(1 - t, 4))));
+        if (t < 1) requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
-  }
+    function start(){
+      if (started || !clear || !inView) return;
+      started = true;
+      counts.forEach(function(el, i){ setTimeout(function(){ countUp(el); }, i * 150); });
+    }
+
+    var modal = document.getElementById('leadModal');
+    if (modal && typeof modal.showModal === 'function') {
+      modal.addEventListener('close', function(){ clear = true; setTimeout(start, 300); });
+    } else {
+      setTimeout(function(){ clear = true; start(); }, document.body.classList.contains('intro-skip') ? 0 : 1800);
+    }
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function(entries, obs){
+        if (entries[0].isIntersecting) { inView = true; obs.disconnect(); start(); }
+      }, { threshold: 0.5 }).observe(stats);
+    } else {
+      inView = true;
+    }
+  })();
 
   if ('IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if (entry.isIntersecting) {
           entry.target.classList.add('in-view');
-          var count = entry.target.querySelector('.count');
-          if (count) countUp(count);
           observer.unobserve(entry.target);
         }
       });
