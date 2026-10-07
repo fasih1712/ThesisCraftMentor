@@ -4,13 +4,37 @@ on:
   push:
     branches: [main]
   workflow_dispatch: {}
+  schedule:
+    # 00:30 UTC = 05:30 Pakistan time; publishes any blog post dated today
+    - cron: '30 0 * * *'
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: fasih1712/thesiscraftmentors
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      deploy: ${{ steps.due.outputs.deploy }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Decide whether to deploy
+        id: due
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          elif node scripts/build-blog.mjs --due | grep -q "due=true"; then
+            echo "deploy=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "deploy=false" >> "$GITHUB_OUTPUT"
+          fi
+
   build-and-push:
+    needs: check
+    if: needs.check.outputs.deploy == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,6 +42,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Build blog for today
+        run: node scripts/build-blog.mjs
 
       - name: Log in to GHCR
         uses: docker/login-action@v3

@@ -474,6 +474,9 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .blog{background:var(--bg); transition:background-color .35s ease;}
   .blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
   @media (max-width:860px){ .blog-grid{grid-template-columns:1fr;} }
+  .blog-all{margin:36px 0 0; text-align:center;}
+  .btn-ghost-dark{background:transparent; border-color:var(--gold-500); color:var(--heading);}
+  .btn-ghost-dark:hover{background:var(--gold-500); color:var(--navy-900);}
   .blog-grid .reveal:nth-child(2){transition-delay:.1s;}
   .blog-grid .reveal:nth-child(3){transition-delay:.2s;}
   .post-card{
@@ -896,6 +899,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <p>Practical, step-by-step advice from our mentors on topics, proposals, literature reviews and more.</p>
       </div>
       <div class="blog-grid">
+<!-- blog:latest:start -->
+        <a class="post-card reveal" href="/blog/how-to-write-a-methodology-chapter/">
+          <span class="tag">Research methods</span>
+          <h3>How to Write a Dissertation Methodology Chapter</h3>
+          <p>Design, sampling, data collection, analysis and ethics: how to justify every choice you made.</p>
+          <span class="post-meta"><time datetime="2026-10-08">8 Oct 2026</time> &middot; 10 min read</span>
+          <span class="read-more">Read the guide &rarr;</span>
+        </a>
+        <a class="post-card reveal" href="/blog/dissertation-structure-chapter-by-chapter/">
+          <span class="tag">Planning</span>
+          <h3>Dissertation Structure: What Goes in Each Chapter</h3>
+          <p>From abstract to appendices: what each chapter must do, and a word count split that keeps you on track.</p>
+          <span class="post-meta"><time datetime="2026-10-08">8 Oct 2026</time> &middot; 9 min read</span>
+          <span class="read-more">Read the guide &rarr;</span>
+        </a>
         <a class="post-card reveal" href="/blog/how-to-write-a-research-proposal/">
           <span class="tag">Planning</span>
           <h3>How to Write a Research Proposal That Gets Approved</h3>
@@ -903,21 +921,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <span class="post-meta"><time datetime="2026-09-29">29 Sep 2026</time> &middot; 8 min read</span>
           <span class="read-more">Read the guide &rarr;</span>
         </a>
-        <a class="post-card reveal" href="/blog/how-to-choose-a-dissertation-topic/">
-          <span class="tag">Getting started</span>
-          <h3>How to Choose a Dissertation Topic: 8 Practical Steps</h3>
-          <p>Turn a broad interest into a focused, researchable question you can finish on time.</p>
-          <span class="post-meta"><time datetime="2026-09-26">26 Sep 2026</time> &middot; 7 min read</span>
-          <span class="read-more">Read the guide &rarr;</span>
-        </a>
-        <a class="post-card reveal" href="/blog/how-to-write-a-literature-review/">
-          <span class="tag">Writing</span>
-          <h3>How to Write a Literature Review for Your Thesis</h3>
-          <p>Find sources, organise themes, synthesise research and spot the gap your study will fill.</p>
-          <span class="post-meta"><time datetime="2026-09-23">23 Sep 2026</time> &middot; 9 min read</span>
-          <span class="read-more">Read the guide &rarr;</span>
-        </a>
+<!-- blog:latest:end -->
       </div>
+      <p class="blog-all reveal"><a class="btn btn-ghost-dark" href="/blog/">View all articles &rarr;</a></p>
     </div>
   </section>
 

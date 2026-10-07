@@ -77,6 +77,12 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Blog",
+          "item": "https://thesiscraftmentors.com/blog/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "How to Write a Research Proposal That Gets Approved",
           "item": "https://thesiscraftmentors.com/blog/how-to-write-a-research-proposal/"
         }
@@ -260,7 +266,20 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .cta h2{color:var(--paper); margin-top:0;}
   .related{margin-top:40px; padding-top:24px; border-top:1px solid var(--paper-line);}
   .related strong{font-family:'Fraunces',serif; color:var(--heading);}
+  /* blog index */
+  .blog-index{max-width:var(--maxw); margin:0 auto; padding:56px 28px 80px;}
+  .blog-index > p{color:var(--ink-soft); max-width:640px;}
+  .post-list{display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:22px; margin-top:36px;}
+  .post-card{display:flex; flex-direction:column; gap:10px; padding:26px; background:var(--surface); border:1px solid var(--paper-line); border-radius:14px; text-decoration:none; color:var(--ink); transition:transform .25s var(--ease), border-color .25s var(--ease), box-shadow .25s var(--ease);}
+  .post-card:hover{transform:translateY(-4px); border-color:var(--gold-500); box-shadow:0 18px 36px -24px rgba(0,0,0,0.4);}
+  .post-card .tag{align-self:flex-start; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-700);}
+  .post-card h2{font-size:1.2rem; margin:0;}
+  .post-card p{margin:0; font-size:0.95rem; color:var(--ink-soft); line-height:1.6;}
+  .post-card .post-meta{margin-top:auto; font-size:0.82rem; color:var(--ink-soft);}
+  .post-card .new{display:inline-block; margin-left:8px; padding:1px 8px; border-radius:999px; background:var(--gold-500); color:var(--navy-900); font-size:0.68rem; font-weight:600; letter-spacing:0.06em; vertical-align:middle;}
   @media (max-width:520px){
+    .blog-index{padding:40px 16px 56px;}
+    .post-list{grid-template-columns:1fr;}
     article{padding:40px 16px 56px;}
     .cta{padding:24px 20px;}
   }
@@ -278,7 +297,7 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
       <a href="/#services">Services</a>
       <a href="/#process">Process</a>
       <a href="/#reviews">Testimonials</a>
-      <a href="/#blog">Blog</a>
+      <a href="/blog/">Blog</a>
       <a href="/#contact">Contact</a>
     </nav>
     <a class="btn btn-gold nav-cta" href="/#contact">Get a free quote</a>
@@ -294,7 +313,7 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
 
 <main>
 <article>
-  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#blog">Blog</a></nav>
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a></nav>
   <h1>How to Write a Research Proposal That Gets Approved</h1>
   <p class="meta">By Thesis Craft Mentors &middot; <time datetime="2026-09-29">29 September 2026</time> &middot; 8 min read</p>
 
@@ -403,8 +422,9 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   <aside class="related">
     <strong>More from the blog</strong>
     <ul>
+      <li><a href="/blog/how-to-write-a-methodology-chapter/">How to Write a Dissertation Methodology Chapter</a></li>
+      <li><a href="/blog/dissertation-structure-chapter-by-chapter/">Dissertation Structure: What Goes in Each Chapter</a></li>
       <li><a href="/blog/how-to-choose-a-dissertation-topic/">How to Choose a Dissertation Topic: 8 Practical Steps</a></li>
-      <li><a href="/blog/how-to-write-a-literature-review/">How to Write a Literature Review for Your Thesis: A Step-by-Step Guide</a></li>
     </ul>
   </aside>
 </article>
@@ -418,7 +438,7 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
     </a>
     <div class="footer-links">
       <a href="https://www.instagram.com/thesiscraftmentors/" target="_blank" rel="noopener">Instagram</a>
-      <a href="/#blog">Blog</a>
+      <a href="/blog/">Blog</a>
       <a href="/#contact">Contact</a>
     </div>
     <span>&copy; 2026 thesiscraftmentors.com</span>
