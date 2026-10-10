@@ -507,6 +507,11 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .field input:focus, .field textarea:focus{border-color:var(--gold-500); box-shadow:0 0 0 3px rgba(212,175,55,0.18);}
   .field textarea{resize:vertical; min-height:112px;}
   .form-note{font-size:0.8rem; color:var(--ink-soft); opacity:0.75;}
+  .form-status{font-size:0.9rem; font-weight:600; margin:0;}
+  .form-status:empty{display:none;}
+  .form-status.ok{color:#2f7a4a;}
+  .form-status.err{color:#b3261e;}
+  .form-status a{color:inherit; text-decoration:underline;}
   .contact-side{
     background:var(--navy-900); color:var(--paper);
     border-radius:var(--radius-l); padding:38px;
@@ -954,7 +959,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <textarea id="message" placeholder="Tell us what you need and when it's due"></textarea>
           </div>
           <button class="btn btn-gold" type="submit" style="align-self:flex-start;">Send request</button>
-          <p class="form-note">Your email app will open with the request ready to send.</p>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          <p class="form-note">We usually reply within a few hours.</p>
         </form>
 
         <div class="contact-side reveal">
@@ -999,6 +1005,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <textarea id="lead-message" placeholder="e.g. MBA dissertation, chapter 2, due in 3 weeks"></textarea>
     </div>
     <button class="btn btn-gold" type="submit">Send request</button>
+    <p class="form-status" role="status" aria-live="polite"></p>
     <p class="lead-alt">Prefer chat? <a href="https://wa.me/447440736543" target="_blank" rel="noopener">Message us on WhatsApp</a></p>
   </form>
 </dialog>
@@ -1266,27 +1273,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  function sendEnquiry(name, whatsapp, topic, message){
-    if (window.fbq) window.fbq('track', 'Lead');
-    var subject = encodeURIComponent('New assignment enquiry from ' + name);
-    var body = encodeURIComponent(
-      'Full name: ' + name +
-      '\nWhatsApp number: ' + whatsapp +
-      '\nCourse or thesis topic: ' + topic +
-      '\nAssignment details and deadline: ' + message
-    );
-    window.location.href = 'mailto:info@thesiscraftmentors.com?subject=' + subject + '&body=' + body;
+  /* sends the enquiry straight to info@ through FormSubmit, no email app needed */
+  function sendEnquiry(form, fields, onSent){
+    var button = form.querySelector('button[type="submit"]');
+    var status = form.querySelector('.form-status');
+    var label = button.textContent;
+    button.disabled = true;
+    button.textContent = 'Sending...';
+    status.className = 'form-status';
+    status.textContent = '';
+
+    fetch('https://formsubmit.co/ajax/info@thesiscraftmentors.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'New assignment enquiry from ' + fields.name,
+        _template: 'table',
+        'Full name': fields.name,
+        'WhatsApp number': fields.whatsapp,
+        'Course or thesis topic': fields.topic || '-',
+        'Assignment details and deadline': fields.message || '-',
+        'Sent from': location.href
+      })
+    })
+      .then(function(res){ return res.json().then(function(data){ if (!res.ok || String(data.success) !== 'true') throw new Error(data.message); }); })
+      .then(function(){
+        if (window.fbq) window.fbq('track', 'Lead');
+        form.reset();
+        status.className = 'form-status ok';
+        status.textContent = 'Thank you! Your request has been sent. We will contact you on WhatsApp shortly.';
+        if (onSent) onSent();
+      })
+      .catch(function(){
+        status.className = 'form-status err';
+        status.innerHTML = 'Sorry, your request could not be sent. Please <a href="https://wa.me/447440736543" target="_blank" rel="noopener">message us on WhatsApp</a> instead.';
+      })
+      .then(function(){
+        button.disabled = false;
+        button.textContent = label;
+      });
   }
 
   document.getElementById('contactForm').addEventListener('submit', function(event){
     event.preventDefault();
     var form = event.currentTarget;
-    sendEnquiry(
-      form.querySelector('#name').value,
-      form.querySelector('#whatsapp').value,
-      form.querySelector('#topic').value,
-      form.querySelector('#message').value
-    );
+    sendEnquiry(form, {
+      name: form.querySelector('#name').value,
+      whatsapp: form.querySelector('#whatsapp').value,
+      topic: form.querySelector('#topic').value,
+      message: form.querySelector('#message').value
+    });
   });
 
   /* enquiry popup: shown on every page load, after the intro splash clears */
@@ -1300,13 +1336,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     modal.addEventListener('click', function(event){ if (event.target === modal) modal.close(); });
     document.getElementById('leadForm').addEventListener('submit', function(event){
       event.preventDefault();
-      sendEnquiry(
-        document.getElementById('lead-name').value,
-        document.getElementById('lead-whatsapp').value,
-        '',
-        document.getElementById('lead-message').value
-      );
-      modal.close();
+      sendEnquiry(event.currentTarget, {
+        name: document.getElementById('lead-name').value,
+        whatsapp: document.getElementById('lead-whatsapp').value,
+        message: document.getElementById('lead-message').value
+      }, function(){ setTimeout(function(){ modal.close(); }, 2500); });
     });
   })();
 </script>
