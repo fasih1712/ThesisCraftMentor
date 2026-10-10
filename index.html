@@ -1273,7 +1273,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     });
   });
 
-  /* sends the enquiry straight to info@ through FormSubmit, no email app needed */
+  /* sends the enquiry straight to the inbox through FormSubmit (temporarily mfasihullah84@gmail.com for testing; switch back to info@), no email app needed */
   function sendEnquiry(form, fields, onSent){
     var button = form.querySelector('button[type="submit"]');
     var status = form.querySelector('.form-status');
@@ -1283,7 +1283,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     status.className = 'form-status';
     status.textContent = '';
 
-    fetch('https://formsubmit.co/ajax/info@thesiscraftmentors.com', {
+    fetch('https://formsubmit.co/ajax/mfasihullah84@gmail.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({
