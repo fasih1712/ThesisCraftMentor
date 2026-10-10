@@ -25,6 +25,10 @@ for (const p of posts) {
   }
   if (!/^\d{4}-\d{2}-\d{2}$/.test(p.date)) throw new Error(`posts.json: "${p.slug}" has a bad date ${p.date}`);
   if (!fs.existsSync(r(`content/blog/${p.slug}.html`))) throw new Error(`missing content/blog/${p.slug}.html`);
+  // new posts go out on Mondays and Thursdays only
+  if (p.date > today && ![1, 4].includes(new Date(`${p.date}T00:00:00Z`).getUTCDay())) {
+    throw new Error(`posts.json: "${p.slug}" is scheduled for ${p.date}, which is not a Monday or Thursday`);
+  }
 }
 
 if (arg('due')) {

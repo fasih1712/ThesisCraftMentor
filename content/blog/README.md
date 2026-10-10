@@ -15,6 +15,6 @@ This writes `blog/<slug>/index.html` for every post whose date has arrived (Paki
 
 ## Scheduling
 
-A post dated in the future stays hidden. The deploy workflow runs every day at 05:30 Pakistan time and redeploys when a post is dated that day, so it goes live automatically.
+Posts go out on Mondays and Thursdays, one per day: the build refuses a future date that falls on any other day. A post dated in the future stays hidden. The deploy workflow runs every day at 05:30 Pakistan time and redeploys when a post is dated that day, so it goes live automatically.
 
 Only link to posts that are already published, or the link will 404 until the other post's date.
