@@ -1002,6 +1002,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <input id="lead-whatsapp" type="tel" placeholder="+XX XXX XXXXXXX" required>
     </div>
     <div class="field">
+      <label for="lead-topic">Course or thesis topic</label>
+      <input id="lead-topic" type="text" placeholder="e.g. MBA marketing assignment">
+    </div>
+    <div class="field">
       <label for="lead-message">What do you need, and by when?</label>
       <textarea id="lead-message" placeholder="e.g. MBA dissertation, chapter 2, due in 3 weeks"></textarea>
     </div>
@@ -1341,6 +1345,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       sendEnquiry(event.currentTarget, {
         name: document.getElementById('lead-name').value,
         whatsapp: document.getElementById('lead-whatsapp').value,
+        topic: document.getElementById('lead-topic').value,
         message: document.getElementById('lead-message').value
       }, function(){ setTimeout(function(){ modal.close(); }, 2500); });
     });
