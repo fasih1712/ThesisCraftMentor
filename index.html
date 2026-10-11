@@ -396,8 +396,11 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .reviews{background:var(--navy-800); color:var(--paper);}
   .review-slider{display:flex; align-items:center; gap:18px;}
   .review-viewport{flex:1; overflow:hidden; border-radius:var(--radius-m);}
-  .review-track{display:flex; transition:transform .55s var(--ease);}
-  .review-track .review-card{flex:0 0 100%; max-width:100%;}
+  .review-slider{--per-view:3; --review-gap:20px;}
+  @media (max-width:1000px){ .review-slider{--per-view:2;} }
+  @media (max-width:680px){ .review-slider{--per-view:1;} }
+  .review-track{display:flex; gap:var(--review-gap); align-items:stretch; padding-bottom:14px; transition:transform .55s var(--ease);}
+  .review-track .review-card{flex:0 0 calc((100% - (var(--per-view) - 1) * var(--review-gap)) / var(--per-view)); max-width:none;}
   .slider-arrow{
     flex:none; width:46px; height:46px; border-radius:50%;
     border:1px solid rgba(212,175,55,0.4); background:rgba(246,242,231,0.06);
@@ -409,17 +412,22 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   @media (max-width:640px){ .slider-arrow{width:38px; height:38px;} .review-slider{gap:10px;} }
   .review-card{
     position:relative;
+    display:flex; flex-direction:column;
     background:rgba(246,242,231,0.05);
-    border:1px solid rgba(212,175,55,0.25);
+    border:1px solid rgba(212,175,55,0.22);
     border-radius:var(--radius-m);
-    padding:36px 32px;
-    max-width:640px; margin:0 auto;
-    text-align:center;
+    padding:30px 28px 26px;
+    text-align:left;
+    transition:border-color .3s var(--ease), background .3s var(--ease);
   }
-  .review-card .mark{font-family:'Fraunces',serif; font-size:2.6rem; color:var(--gold-500); opacity:0.55; line-height:1; display:block; margin:0 auto 8px;}
-  .review-card .quote{font-family:'Fraunces',serif; font-style:italic; font-size:1.15rem; line-height:1.55; color:var(--white);}
-  .review-card .who{margin-top:20px; font-size:0.85rem; color:var(--gold-400);}
-  .review-card .who .uni-line{display:block; margin-top:4px; font-size:0.8rem; color:rgba(246,242,231,0.65);}
+  .review-card:hover{border-color:rgba(212,175,55,0.5); background:rgba(246,242,231,0.07);}
+  .review-card .mark{font-family:'Fraunces',serif; font-size:3rem; color:var(--gold-500); opacity:0.55; line-height:1; display:block; height:28px; margin:0 0 12px;}
+  .review-card .quote{flex:1; margin:0; font-family:'Fraunces',serif; font-size:1.05rem; line-height:1.6; color:var(--white);}
+  .review-card .who{display:flex; align-items:center; gap:12px; margin-top:22px; padding-top:18px; border-top:1px solid rgba(246,242,231,0.1);}
+  .review-card .avatar{flex:none; width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(212,175,55,0.16); border:1px solid rgba(212,175,55,0.45); color:var(--gold-400); font-weight:700; font-size:0.85rem; letter-spacing:0.04em;}
+  .review-card .who-text{display:flex; flex-direction:column; gap:2px; min-width:0;}
+  .review-card .name{font-size:0.92rem; font-weight:600; color:var(--white);}
+  .review-card .uni-line{font-size:0.8rem; color:rgba(246,242,231,0.65);}
   /* stats counter */
   .stats{padding:56px 0; background:var(--surface); border-bottom:1px solid var(--paper-line); transition:background-color .35s ease;}
   .stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px; text-align:center;}
@@ -559,7 +567,7 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
     .brand img{height:32px; width:32px;}
     .contact-side{padding:26px 22px;}
     .why-item{padding:22px 20px 20px;}
-    .review-card{padding:24px 20px 22px;}
+    .review-card{padding:24px 20px 20px;}
     .wa-float{width:50px; height:50px; bottom:16px; right:16px;}
     .wa-float svg{width:24px; height:24px;}
   }
@@ -792,29 +800,44 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="review-viewport">
           <div class="review-track" id="reviewTrack">
             <div class="review-card">
-              <span class="mark">&ldquo;</span>
+              <span class="mark" aria-hidden="true">&ldquo;</span>
               <p class="quote">The support I received throughout my academic research was helpful. The guidance on structuring my thesis and improving its presentation made the revision process easier.</p>
-              <p class="who">Aqib Khan<span class="uni-line">Technical University of Munich</span></p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true">AK</span>
+                <span class="who-text"><span class="name">Aqib Khan</span><span class="uni-line">Technical University of Munich</span></span>
+              </div>
             </div>
             <div class="review-card">
-              <span class="mark">&ldquo;</span>
+              <span class="mark" aria-hidden="true">&ldquo;</span>
               <p class="quote">The assistance with organizing my research and improving the academic writing was useful. The feedback helped me understand how to present my work more clearly.</p>
-              <p class="who">Michael Otorondo<span class="uni-line">University of Chester</span></p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true">MO</span>
+                <span class="who-text"><span class="name">Michael Otorondo</span><span class="uni-line">University of Chester</span></span>
+              </div>
             </div>
             <div class="review-card">
-              <span class="mark">&ldquo;</span>
+              <span class="mark" aria-hidden="true">&ldquo;</span>
               <p class="quote">I appreciated the support with my research structure and academic formatting. The process helped me identify areas where my work needed improvement.</p>
-              <p class="who">John Stanley<span class="uni-line">University of Essex</span></p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true">JS</span>
+                <span class="who-text"><span class="name">John Stanley</span><span class="uni-line">University of Essex</span></span>
+              </div>
             </div>
             <div class="review-card">
-              <span class="mark">&ldquo;</span>
+              <span class="mark" aria-hidden="true">&ldquo;</span>
               <p class="quote">The research guidance and assistance with organizing my thesis helped me approach my academic work in a more structured way.</p>
-              <p class="who">Vinod Kumar<span class="uni-line">University of Passau</span></p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true">VK</span>
+                <span class="who-text"><span class="name">Vinod Kumar</span><span class="uni-line">University of Passau</span></span>
+              </div>
             </div>
             <div class="review-card">
-              <span class="mark">&ldquo;</span>
+              <span class="mark" aria-hidden="true">&ldquo;</span>
               <p class="quote">The feedback on my research and thesis structure was helpful. It gave me a clearer understanding of how to organize and present my academic work.</p>
-              <p class="who">Getesh Kumar<span class="uni-line">Saarland University</span></p>
+              <div class="who">
+                <span class="avatar" aria-hidden="true">GK</span>
+                <span class="who-text"><span class="name">Getesh Kumar</span><span class="uni-line">Saarland University</span></span>
+              </div>
             </div>
           </div>
           <div class="review-progress" aria-hidden="true"><span id="reviewProgress"></span></div>
@@ -1134,31 +1157,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     var prevBtn = document.getElementById('reviewPrev');
     var nextBtn = document.getElementById('reviewNext');
     var progress = document.getElementById('reviewProgress');
-    var DELAY = 3000;
+    var DELAY = 5000;
     var current = 0;
     var timer;
+    var perView = 1;
+    function pages(){ return Math.max(1, slides.length - perView + 1); }
+    function measure(){
+      perView = parseInt(getComputedStyle(slider).getPropertyValue('--per-view'), 10) || 1;
+      dotsWrap.innerHTML = '';
+      for (var i = 0; i < pages(); i++) {
+        (function(index){
+          var dot = document.createElement('button');
+          dot.type = 'button';
+          dot.className = 'review-dot';
+          dot.setAttribute('aria-label', 'Go to testimonial ' + (index + 1));
+          dot.addEventListener('click', function(){ goTo(index); restart(); });
+          dotsWrap.appendChild(dot);
+        })(i);
+      }
+      current = Math.min(current, pages() - 1);
+    }
     progress.style.setProperty('--review-delay', DELAY + 'ms');
 
-    for (var i = 0; i < slides.length; i++) {
-      (function(index){
-        var dot = document.createElement('button');
-        dot.type = 'button';
-        dot.className = 'review-dot' + (index === 0 ? ' active' : '');
-        dot.setAttribute('aria-label', 'Go to testimonial ' + (index + 1));
-        dot.addEventListener('click', function(){ goTo(index); restart(); });
-        dotsWrap.appendChild(dot);
-      })(i);
-    }
-
     function update(){
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      track.style.transform = 'translateX(-' + slides[current].offsetLeft + 'px)';
       var dots = dotsWrap.children;
       for (var i = 0; i < dots.length; i++) {
         dots[i].classList.toggle('active', i === current);
       }
       for (var j = 0; j < slides.length; j++) {
-        slides[j].classList.toggle('is-active', j === current);
-        slides[j].setAttribute('aria-hidden', j === current ? 'false' : 'true');
+        var visible = j >= current && j < current + perView;
+        slides[j].classList.toggle('is-active', visible);
+        slides[j].setAttribute('aria-hidden', visible ? 'false' : 'true');
       }
     }
     function runProgress(){
@@ -1167,7 +1197,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (timer) progress.classList.add('run');
     }
     function goTo(index){
-      current = (index + slides.length) % slides.length;
+      current = (index + pages()) % pages();
       update();
       runProgress();
     }
@@ -1175,7 +1205,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function prev(){ goTo(current - 1); }
     function start(){
       stop();
-      if (slides.length < 2 || document.hidden) return;
+      if (pages() < 2 || document.hidden) return;
       slider.classList.remove('paused');
       timer = setInterval(next, DELAY);
       runProgress();
@@ -1204,6 +1234,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       touchStartX = null;
     });
 
+    var resizeTimer;
+    window.addEventListener('resize', function(){
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function(){ measure(); update(); start(); }, 150);
+    });
+
+    measure();
     update();
     start();
   })();
