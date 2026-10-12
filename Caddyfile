@@ -1,9 +1,32 @@
-thesiscraftmentors.com, www.thesiscraftmentors.com {
+thesiscraftmentors.com {
     root * /srv
-    file_server
     encode zstd gzip
 
+    # one URL per page: /index.html duplicates the homepage
+    redir /index.html / permanent
+
+    header {
+        Strict-Transport-Security "max-age=31536000"
+        X-Content-Type-Options "nosniff"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Frame-Options "SAMEORIGIN"
+    }
     header /assets/* Cache-Control "public, max-age=2592000, immutable"
+
+    file_server
+
+    handle_errors {
+        @notfound expression {err.status_code} == 404
+        handle @notfound {
+            rewrite * /404.html
+            file_server
+        }
+    }
+}
+
+# serve the site on one host only, so search engines don't see duplicate pages
+www.thesiscraftmentors.com {
+    redir https://thesiscraftmentors.com{uri} permanent
 }
 
 # AFTR Solutions site: separate container (aftr-web) published on the

@@ -99,7 +99,8 @@ ${related}
   };
   fs.mkdirSync(r(`blog/${p.slug}`), { recursive: true });
   fs.writeFileSync(r(`blog/${p.slug}/index.html`), page({
-    SEO_TITLE: `${esc(p.seoTitle)} | Thesis Craft Mentors`,
+    // keep titles short enough for search results: drop the brand suffix when it would push past 65 characters
+    SEO_TITLE: esc(p.seoTitle.length + 23 <= 65 ? `${p.seoTitle} | Thesis Craft Mentors` : p.seoTitle),
     DESCRIPTION: esc(p.description),
     URL: url(p.slug),
     OG_TYPE: 'article',
@@ -119,9 +120,9 @@ const cards = published.map(p => `    <a class="post-card" href="/blog/${p.slug}
       <p>${esc(p.excerpt)}</p>
       <span class="post-meta"><time datetime="${p.date}">${shortDate(p.date)}</time> &middot; ${p.readTime} min read</span>
     </a>`).join('\n');
-const indexDesc = 'Free, practical guides from Thesis Craft Mentors on choosing a topic, writing proposals, literature reviews, methodology, referencing and every other stage of your thesis.';
+const indexDesc = 'Free, practical thesis guides: choosing a topic, research proposals, literature reviews, methodology, structure and Harvard referencing.';
 fs.writeFileSync(r('blog/index.html'), page({
-  SEO_TITLE: 'Blog: Free Thesis and Dissertation Writing Guides | Thesis Craft Mentors',
+  SEO_TITLE: 'Thesis &amp; Dissertation Guides | Thesis Craft Mentors Blog',
   DESCRIPTION: esc(indexDesc),
   URL: `${SITE}/blog/`,
   OG_TYPE: 'website',
