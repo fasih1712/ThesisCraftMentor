@@ -143,7 +143,7 @@ fs.writeFileSync(r('blog/index.html'), page({
   MAIN: `<section class="blog-index">
   <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Blog</nav>
   <h1>Free guides for thesis writers</h1>
-  <p>Practical, step-by-step advice from our mentors on every stage of your thesis. New guides every week.</p>
+  <p>Practical, step-by-step advice from our mentors on every stage of your thesis. New guides regularly.</p>
   <div class="post-list">
 ${cards}
   </div>
