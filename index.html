@@ -972,7 +972,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div class="field">
             <label for="whatsapp">WhatsApp number</label>
-            <input id="whatsapp" type="tel" placeholder="+XX XXX XXXXXXX" required>
+            <input id="whatsapp" type="tel" placeholder="e.g. +447700900123" inputmode="tel" autocomplete="tel" maxlength="16" pattern="\+?[0-9]{7,15}" title="Digits only, optionally starting with + (e.g. +447440736543 or 03001234567)" required>
           </div>
           <div class="field">
             <label for="topic">Course or thesis topic</label>
@@ -1022,7 +1022,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="field">
       <label for="lead-whatsapp">WhatsApp number</label>
-      <input id="lead-whatsapp" type="tel" placeholder="+XX XXX XXXXXXX" required>
+      <input id="lead-whatsapp" type="tel" placeholder="e.g. +447700900123" inputmode="tel" autocomplete="tel" maxlength="16" pattern="\+?[0-9]{7,15}" title="Digits only, optionally starting with + (e.g. +447440736543 or 03001234567)" required>
     </div>
     <div class="field">
       <label for="lead-topic">Course or thesis topic</label>
@@ -1313,6 +1313,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (window.dataLayer) window.dataLayer.push({ event: 'whatsapp_click' });
       if (window.gtag) window.gtag('event', 'whatsapp_click');
       if (window.fbq) window.fbq('trackCustom', 'WhatsAppClick');
+    });
+  });
+
+  /* phone fields: digits only, with an optional + allowed only as the first character */
+  document.querySelectorAll('#whatsapp, #lead-whatsapp').forEach(function(input){
+    input.addEventListener('input', function(){
+      var v = input.value;
+      var clean = (v.charAt(0) === '+' ? '+' : '') + v.replace(/\D/g, '');
+      if (clean !== v) {
+        var caret = input.selectionStart - (v.length - clean.length);
+        input.value = clean;
+        input.setSelectionRange(Math.max(caret, 0), Math.max(caret, 0));
+      }
+      input.setCustomValidity('');
+    });
+    input.addEventListener('invalid', function(){
+      input.setCustomValidity(input.validity.valueMissing
+        ? 'Please enter your WhatsApp number.'
+        : 'Please enter a valid number: 7 to 15 digits, optionally starting with + (e.g. +447440736543 or 03001234567).');
     });
   });
 
