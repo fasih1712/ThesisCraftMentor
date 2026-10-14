@@ -219,11 +219,11 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .js-ready .reveal.in-view{opacity:1; transform:none;}
 
   /* cascade delay for grouped cards */
-  .chapter-list .reveal:nth-child(1){transition-delay:0s;}
-  .chapter-list .reveal:nth-child(2){transition-delay:.07s;}
-  .chapter-list .reveal:nth-child(3){transition-delay:.14s;}
-  .chapter-list .reveal:nth-child(4){transition-delay:.21s;}
-  .chapter-list .reveal:nth-child(5){transition-delay:.28s;}
+  .services-grid .reveal:nth-child(1){transition-delay:0s;}
+  .services-grid .reveal:nth-child(2){transition-delay:.07s;}
+  .services-grid .reveal:nth-child(3){transition-delay:.14s;}
+  .services-grid .reveal:nth-child(4){transition-delay:.21s;}
+  .services-grid .reveal:nth-child(5){transition-delay:.28s;}
   .steps .reveal:nth-child(1){transition-delay:0s;}
   .steps .reveal:nth-child(2){transition-delay:.08s;}
   .steps .reveal:nth-child(3){transition-delay:.16s;}
@@ -412,18 +412,23 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
 
   /* services */
   .services{background:var(--bg); transition:background-color .35s ease;}
-  .chapter-list{border-top:1px solid var(--paper-line); transition:border-color .35s ease;}
-  .chapter{
-    display:grid; grid-template-columns:96px 1fr; gap:32px;
-    padding:32px 20px; margin:0 -20px; border-bottom:1px solid var(--paper-line);
-    align-items:start; border-radius:var(--radius-m);
-    transition:background .25s var(--ease), border-color .35s ease;
+  .services-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+  @media (max-width:900px){ .services-grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:540px){ .services-grid{grid-template-columns:1fr;} }
+  .svc-card{
+    background:var(--surface); border-radius:16px; padding:36px 28px 32px;
+    box-shadow:0 2px 12px rgba(28,26,21,0.07); border:1px solid var(--paper-line);
+    display:flex; flex-direction:column; gap:16px;
+    transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .35s ease, border-color .35s ease;
   }
-  .chapter:hover{background:rgba(212,175,55,0.07);}
-  @media (max-width:640px){ .chapter{grid-template-columns:1fr; gap:8px; margin:0 -14px; padding:28px 14px;} }
-  .chapter .num{font-family:'Fraunces',serif; font-style:italic; font-size:1.5rem; color:var(--gold-500);}
-  .chapter h3{font-size:1.25rem; color:var(--heading); margin-bottom:8px; transition:color .3s ease;}
-  .chapter p{color:var(--ink-soft); max-width:60ch; margin:0;}
+  .svc-card:hover{transform:translateY(-4px); box-shadow:0 8px 28px rgba(28,26,21,0.12);}
+  .svc-icon-wrap{width:72px; height:72px; border-radius:50%; background:var(--navy-900); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .svc-icon-wrap svg{width:32px; height:32px; fill:none; stroke:var(--gold-500); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
+  .svc-num{font-family:'Fraunces',serif; font-style:italic; font-size:2.4rem; color:var(--paper-line); line-height:1; transition:color .3s ease;}
+  .svc-card h3{font-size:1.15rem; color:var(--heading); margin:0; transition:color .3s ease;}
+  .svc-card p{color:var(--ink-soft); font-size:0.95rem; margin:0; flex:1;}
+  .svc-read{display:inline-flex; align-items:center; gap:6px; font-size:0.88rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--heading); text-decoration:none; transition:color .2s ease, gap .2s ease;}
+  .svc-read:hover{color:var(--gold-500); gap:10px;}
 
   /* process */
   .process{background:var(--navy-900); color:var(--paper);}
@@ -761,41 +766,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2>What we take off your plate</h2>
         <p>Every thesis is built chapter by chapter. We step in wherever the workload is heaviest.</p>
       </div>
-      <div class="chapter-list">
-        <div class="chapter reveal">
-          <span class="num">01</span>
-          <div>
-            <h3>Assignment and dissertation guidance</h3>
-            <p>Outline reviews, structure coaching and model examples for assignments and dissertation chapters, built around your rubric and reading list.</p>
-          </div>
+      <div class="services-grid">
+        <div class="svc-card reveal">
+          <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg></div>
+          <span class="svc-num">01.</span>
+          <h3>Assignment &amp; dissertation guidance</h3>
+          <p>Outline reviews, structure coaching and model examples for assignments and dissertation chapters, built around your rubric and reading list.</p>
+          <a href="#contact" class="svc-read">Get a quote <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="chapter reveal">
-          <span class="num">02</span>
-          <div>
-            <h3>Research and literature support</h3>
-            <p>Source gathering, literature review structuring and summaries so your argument stands on solid ground.</p>
-          </div>
+        <div class="svc-card reveal">
+          <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15z"/></svg></div>
+          <span class="svc-num">02.</span>
+          <h3>Research &amp; literature support</h3>
+          <p>Source gathering, literature review structuring and summaries so your argument stands on solid ground.</p>
+          <a href="#contact" class="svc-read">Get a quote <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="chapter reveal">
-          <span class="num">03</span>
-          <div>
-            <h3>Editing and proofreading</h3>
-            <p>Careful, line by line review for clarity, grammar and academic tone: your voice, sharpened.</p>
-          </div>
+        <div class="svc-card reveal">
+          <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+          <span class="svc-num">03.</span>
+          <h3>Editing &amp; proofreading</h3>
+          <p>Careful, line-by-line review for clarity, grammar and academic tone: your voice, sharpened.</p>
+          <a href="#contact" class="svc-read">Get a quote <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="chapter reveal">
-          <span class="num">04</span>
-          <div>
-            <h3>Formatting and referencing</h3>
-            <p>APA, MLA and Chicago styles applied consistently across chapters, tables and citations.</p>
-          </div>
+        <div class="svc-card reveal">
+          <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div>
+          <span class="svc-num">04.</span>
+          <h3>Formatting &amp; referencing</h3>
+          <p>APA, MLA and Chicago styles applied consistently across chapters, tables and citations.</p>
+          <a href="#contact" class="svc-read">Get a quote <span aria-hidden="true">&rarr;</span></a>
         </div>
-        <div class="chapter reveal">
-          <span class="num">05</span>
-          <div>
-            <h3>Plagiarism review</h3>
-            <p>A similarity check before submission, with fixes where the report flags a concern.</p>
-          </div>
+        <div class="svc-card reveal">
+          <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+          <span class="svc-num">05.</span>
+          <h3>Plagiarism review</h3>
+          <p>A similarity check before submission, with guided fixes where the report flags a concern.</p>
+          <a href="#contact" class="svc-read">Get a quote <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </div>
