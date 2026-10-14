@@ -164,6 +164,8 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
       --bg:#0d1420;
       --surface:#16202f;
       --heading:#f6f2e7;
+      --svc-icon-bg:rgba(212,175,55,0.1);
+      --svc-num:rgba(212,175,55,0.45);
     }
   }
   :root[data-theme="dark"]{
@@ -174,6 +176,8 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
     --bg:#0d1420;
     --surface:#16202f;
     --heading:#f6f2e7;
+    --svc-icon-bg:rgba(212,175,55,0.1);
+    --svc-num:rgba(212,175,55,0.45);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -422,9 +426,9 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
     transition:transform .25s var(--ease), box-shadow .25s var(--ease), background-color .35s ease, border-color .35s ease;
   }
   .svc-card:hover{transform:translateY(-4px); box-shadow:0 8px 28px rgba(28,26,21,0.12);}
-  .svc-icon-wrap{width:72px; height:72px; border-radius:50%; background:var(--navy-900); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .svc-icon-wrap{width:72px; height:72px; border-radius:50%; background:var(--svc-icon-bg, var(--navy-900)); box-shadow:inset 0 0 0 1.5px rgba(212,175,55,0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
   .svc-icon-wrap svg{width:32px; height:32px; fill:none; stroke:var(--gold-500); stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round;}
-  .svc-num{font-family:'Fraunces',serif; font-style:italic; font-size:2.4rem; color:var(--paper-line); line-height:1; transition:color .3s ease;}
+  .svc-num{font-family:'Fraunces',serif; font-style:italic; font-size:2.4rem; color:var(--svc-num, var(--paper-line)); line-height:1; transition:color .3s ease;}
   .svc-card h3{font-size:1.15rem; color:var(--heading); margin:0; transition:color .3s ease;}
   .svc-card p{color:var(--ink-soft); font-size:0.95rem; margin:0; flex:1;}
   .svc-read{display:inline-flex; align-items:center; gap:6px; font-size:0.88rem; font-weight:600; letter-spacing:.04em; text-transform:uppercase; color:var(--heading); text-decoration:none; transition:color .2s ease, gap .2s ease;}
