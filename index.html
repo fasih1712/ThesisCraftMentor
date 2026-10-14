@@ -659,6 +659,15 @@ src="https://www.facebook.com/tr?id=3566398693537178&ev=PageView&noscript=1"
   .lead-alt{font-size:0.85rem; color:var(--ink-soft); text-align:center; margin:0;}
   .lead-alt a{color:var(--gold-700); font-weight:600;}
   @media (max-width:400px){ .lead-head{padding:22px 20px 18px;} .lead-body{padding:18px 20px 20px;} }
+  .stats-disclaimer{margin:28px 0 0; text-align:center; font-size:0.75rem; color:var(--ink-soft); opacity:0.75;}
+  .faq{padding:var(--section-gap, 104px) 0;}
+  .faq-list{display:flex; flex-direction:column; gap:2px; max-width:720px; margin:0 auto;}
+  .faq-item{border:1px solid var(--paper-line); border-radius:var(--radius-m); overflow:hidden;}
+  .faq-item summary{padding:1.1rem 1.4rem; font-weight:600; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; color:var(--heading);}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary::after{content:'+'; font-size:1.3rem; color:var(--gold-500); transition:transform .25s;}
+  .faq-item[open] summary::after{transform:rotate(45deg);}
+  .faq-item p{padding:0 1.4rem 1.1rem; color:var(--ink-soft); margin:0; line-height:1.7;}
 </style>
 </head>
 <body>
@@ -741,6 +750,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="stat reveal"><div class="stat-num"><span class="count" data-target="98">98</span><span class="suffix">%</span></div><p class="stat-label">Delivered on or before deadline</p></div>
       <div class="stat reveal"><div class="stat-num"><span class="count" data-target="5">5</span><span class="suffix">+</span></div><p class="stat-label">Years of academic mentoring</p></div>
     </div>
+    <div class="wrap"><p class="stats-disclaimer">Figures based on internal records. Results may vary.</p></div>
   </section>
 
   <!-- services -->
@@ -1067,6 +1077,38 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <a class="btn btn-gold" href="https://wa.me/447440736543" target="_blank" rel="noopener">Chat on WhatsApp</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="kicker">FAQ</span>
+        <h2>Questions students ask us</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal">
+          <summary>Is it confidential?</summary>
+          <p>Yes. We never share your name, topic, university or files with anyone. Every project is handled privately from brief to delivery.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How quickly can you turn work around?</summary>
+          <p>Most requests are confirmed within a few hours. Timelines depend on scope — share your deadline and we will tell you immediately if we can meet it.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>What subjects do you cover?</summary>
+          <p>Business, management, law, social sciences, engineering and more. If you are unsure whether we cover your subject, send us a message and we will confirm straight away.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>Do you offer revisions?</summary>
+          <p>Yes. Free revisions are included within 14 days of delivery if the work does not match the brief you sent us.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary>How do I get started?</summary>
+          <p>Fill in the form below or message us on WhatsApp. Share your brief, deadline and any marking criteria, and we will come back with a quote.</p>
+        </details>
       </div>
     </div>
   </section>

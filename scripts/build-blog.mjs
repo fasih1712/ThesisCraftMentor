@@ -100,7 +100,7 @@ ${related}
   fs.mkdirSync(r(`blog/${p.slug}`), { recursive: true });
   fs.writeFileSync(r(`blog/${p.slug}/index.html`), page({
     // keep titles short enough for search results: drop the brand suffix when it would push past 65 characters
-    SEO_TITLE: esc(p.seoTitle.length + 23 <= 65 ? `${p.seoTitle} | Thesis Craft Mentors` : p.seoTitle),
+    SEO_TITLE: esc(!p.seoTitle.endsWith('| Thesis Craft Mentors') && p.seoTitle.length + 23 <= 65 ? `${p.seoTitle} | Thesis Craft Mentors` : p.seoTitle),
     DESCRIPTION: esc(p.description),
     URL: url(p.slug),
     OG_TYPE: 'article',
