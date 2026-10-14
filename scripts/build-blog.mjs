@@ -9,6 +9,7 @@
 //   node scripts/build-blog.mjs --due              print due=true if a post is scheduled for today, build nothing
 import fs from 'node:fs';
 import path from 'node:path';
+import { execFileSync } from 'node:child_process';
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1')), '..');
 const SITE = 'https://thesiscraftmentors.com';
@@ -166,12 +167,23 @@ const a = home.indexOf(start), b = home.indexOf(end);
 if (a < 0 || b < a) throw new Error('index.html: blog:latest markers not found');
 fs.writeFileSync(homeFile, home.slice(0, a + start.length) + latest + '\n' + home.slice(b));
 
-// sitemap
+// sitemap: lastmod is the later of the publish date and the last commit that touched the page's
+// sources (needs full git history, so CI checks out with fetch-depth 0)
 const newest = published[0]?.date || today;
+const gitDate = (...files) => {
+  try {
+    return execFileSync('git', ['log', '-1', '--format=%cs', '--', ...files], { cwd: ROOT, encoding: 'utf8' }).trim();
+  } catch { return ''; }
+};
+const laterOf = (...dates) => dates.filter(Boolean).sort().pop();
 const entry = (loc, lastmod) => `  <url>\n    <loc>${loc}</loc>\n    <lastmod>${lastmod}</lastmod>\n  </url>`;
 fs.writeFileSync(r('sitemap.xml'), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${[entry(`${SITE}/`, newest), entry(`${SITE}/blog/`, newest), ...published.map(p => entry(url(p.slug), p.updated || p.date))].join('\n')}
+${[
+  entry(`${SITE}/`, laterOf(newest, gitDate('index.html'))),
+  entry(`${SITE}/blog/`, laterOf(newest, gitDate('content/blog/posts.json', 'scripts/post-template.html'))),
+  ...published.map(p => entry(url(p.slug), laterOf(p.updated || p.date, gitDate(`content/blog/${p.slug}.html`)))),
+].join('\n')}
 </urlset>
 `);
 
