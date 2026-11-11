@@ -27,7 +27,7 @@
     "excerpt": "Aims, methodology, timeline and more: how to structure a proposal your supervisor will approve.",
     "tag": "Planning",
     "date": "2026-09-29",
-    "readTime": 8
+    "readTime": 7
   },
   {
     "slug": "dissertation-structure-chapter-by-chapter",
@@ -57,7 +57,7 @@
     "excerpt": "In-text citations, reference list formats and ready-to-copy examples for the sources you use most.",
     "tag": "Referencing",
     "date": "2026-10-12",
-    "readTime": 8
+    "readTime": 7
   },
   {
     "slug": "how-to-write-a-dissertation-introduction",
@@ -87,6 +87,16 @@
     "excerpt": "Interpret your findings, link them to the literature and answer your research questions with confidence.",
     "tag": "Writing",
     "date": "2026-11-09",
+    "readTime": 7
+  },
+  {
+    "slug": "how-to-write-a-dissertation-conclusion",
+    "title": "How to Write a Dissertation Conclusion",
+    "seoTitle": "How to Write a Dissertation Conclusion | Thesis Craft Mentors",
+    "description": "How to write a dissertation conclusion: a step-by-step structure, answering research questions, stating your contribution, and mistakes to avoid.",
+    "excerpt": "Answer your research questions, state your contribution and end your dissertation with confidence.",
+    "tag": "Writing",
+    "date": "2026-11-12",
     "readTime": 7
   }
 ]
