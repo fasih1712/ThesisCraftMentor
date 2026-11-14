@@ -35,3 +35,20 @@ aftrsolutions.com, www.aftrsolutions.com {
     reverse_proxy 172.17.0.1:8081
     encode gzip
 }
+
+# Court booking app (Aftr-Solutions/court-booking-app): containers in /opt/court-booking published on the
+# docker0 bridge IP. sslip.io hostnames until a real domain is bought. See that repo's deploy/README.md.
+khelo.13.233.73.99.sslip.io {
+    reverse_proxy 172.17.0.1:3100
+    encode gzip
+}
+
+api.khelo.13.233.73.99.sslip.io {
+    request_body {
+        max_size 12MB
+    }
+    reverse_proxy 172.17.0.1:8100 {
+        # the backend's per-IP throttles read X-Real-IP (app/utils/client_ip.py)
+        header_up X-Real-IP {remote_host}
+    }
+}
