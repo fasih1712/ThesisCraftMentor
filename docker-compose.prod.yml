@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/fasih1712/thesiscraftmentors:latest
+    image: 545908811041.dkr.ecr.ap-south-1.amazonaws.com/thesiscraftmentors:latest
     container_name: thesiscraftmentors
     restart: unless-stopped
     ports:
